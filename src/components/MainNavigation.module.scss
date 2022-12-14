@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 10px;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  background-color: #252525;
+  & .logo {
+    display: flex;
+    align-items: center;
+    & span {
+      font-size: 38px;
+      font-weight: 700;
+    }
+  }
+
+  & nav {
+    & ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      & li {
+        padding: 20px;
+        & a {
+          font-size: 22px;
+          text-decoration: none;
+          color: white;
+          cursor: pointer;
+          transition: 0.2s;
+          &:hover, &:active, &.active {
+            color: #dac137;
+          }
+        }
+      }
+    }
+  }
+
+}
+
