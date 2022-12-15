@@ -1,0 +1,28 @@
+@import "../../utils/scss/variables.scss";
+
+.post {
+  padding: 10px 20px;
+  border-top: 1px solid $secondColor;
+  text-align: left;
+  &__tags {
+    display: block;
+    padding: 10px 0;
+    color: $secondColor;
+    font-style: italic;
+  }
+  &__title {
+    margin-bottom: 15px;
+    font-size: 32px;
+  }
+
+  &__text {
+  }
+}
+
+.post--gold {
+  border-color: $mainColor;
+}
+
+.post__tags--gold {
+  color: $mainColor;
+}

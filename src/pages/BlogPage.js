@@ -1,5 +1,5 @@
+import { getPosts } from "../utils/api";
 import Blog from "../components/Blog/Blog";
-
 const BlogPage = () => {
 
   return (
@@ -8,3 +8,7 @@ const BlogPage = () => {
 }
 
 export default BlogPage;
+
+export function loader() {
+  return getPosts();
+}

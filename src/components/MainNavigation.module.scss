@@ -1,16 +1,27 @@
+@import '../utils/scss/variables.scss';
+
 .header {
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 70px;
   padding: 0 10px;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
   background-color: #252525;
+  z-index: 1;
   & .logo {
     display: flex;
     align-items: center;
+    cursor: pointer;
     & span {
-      font-size: 38px;
+      font-size: 26px;
       font-weight: 700;
+      @media (min-width: 768px) {
+        font-size: 38px;
+      }
     }
   }
 
@@ -27,13 +38,13 @@
           color: white;
           cursor: pointer;
           transition: 0.2s;
-          &:hover, &:active, &.active {
-            color: #dac137;
+          &:hover,
+          &:active,
+          &.active {
+            color: $mainColor;
           }
         }
       }
     }
   }
-
 }
-
