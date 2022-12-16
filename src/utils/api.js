@@ -19,7 +19,15 @@ export const getPost = async (id) => {
       return response.json();
     }
   );
-  return data;
+  
+  const user = await fetch(`https://dummyjson.com/users/${data.userId}`)
+  .then((response) => {
+    if(!response.ok) {
+      throw { message: 'Failed to fetch user!', status: 500 }
+    }
+    return response.json()
+  })
+  return { post: data, user };
 };
 
 export const getPostComments = async (id) => {

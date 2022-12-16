@@ -7,7 +7,7 @@ const PostDetail = () => {
 
   return (
     <>
-      <BlogPostDetail post={loadedPost} />
+      <BlogPostDetail postData={loadedPost} />
       <Outlet />
     </>
   );
