@@ -2,13 +2,14 @@ import { Suspense } from "react";
 import { Outlet, useLoaderData, defer, Await } from "react-router-dom";
 import BlogPostDetail from "../components/Post/PostDetail";
 import { getPost } from "../utils/api";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const PostDetail = () => {
   const data = useLoaderData();
 
   return (
     <>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.post}>
           {(loadedPost) => <BlogPostDetail postData={loadedPost} />}
         </Await>
