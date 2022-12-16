@@ -1,18 +1,25 @@
+import { Suspense } from "react";
 import { getPosts } from "../utils/api";
 import Blog from "../components/Blog/Blog";
-import { Outlet } from "react-router-dom";
+import { useLoaderData, defer, Await } from "react-router-dom";
 
 const BlogPage = () => {
+  const data = useLoaderData();
+
   return (
     <>
-      <Blog />
-      <Outlet />
+      <h1>Blog Posts</h1>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Await resolve={data.posts}>
+        {(loadedPosts) => <Blog data={loadedPosts} />}
+        </Await>
+      </Suspense>
     </>
   );
 };
 
 export default BlogPage;
 
-export function loader() {
-  return getPosts();
+export async function loader() {
+  return defer({ posts: getPosts() });
 }

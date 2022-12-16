@@ -2,7 +2,7 @@ export const getPosts = async () => {
   const data = await fetch("https://dummyjson.com/posts?limit=150").then(
     (response) => {
       if (!response.ok) {
-        throw new Response('Failed to fetch posts.', { status: 500 });
+        throw new Error('Could not load posts.')
       }
       return response.json();
     }
@@ -14,7 +14,7 @@ export const getPost = async (id) => {
   const data = await fetch(`https://dummyjson.com/posts/${id}`).then(
     (response) => {
       if (!response.ok) {
-        throw new Response('Failed to fetch post.', { status: 500 });
+        throw new Error('Could not load post.')
       }
       return response.json();
     }
@@ -23,7 +23,7 @@ export const getPost = async (id) => {
   const user = await fetch(`https://dummyjson.com/users/${data.userId}`)
   .then((response) => {
     if(!response.ok) {
-      throw new Response('Failed to fetch user.', { status: 500 });
+      throw new Error('Could not load author of this post.')
     }
     return response.json()
   })
@@ -31,10 +31,10 @@ export const getPost = async (id) => {
 };
 
 export const getPostComments = async (id) => {
-  const data = await fetch(`https://dummyjson.com/posts/${id}/comments`).then(
+  const data = await fetch(`https://dummyjson.com/postss/${id}/comments`).then(
     (response) => {
       if (!response.ok) {
-        throw new Response('Failed to fetch comments.', { status: 500 });
+        throw new Error('Could not load comments.')
       }
       return response.json();
     }

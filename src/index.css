@@ -37,3 +37,8 @@ h1 {
   border-radius: 4px;
   user-select: none;
 }
+
+.error {
+  margin-top: 20px;
+  font-size: 22px;
+}
