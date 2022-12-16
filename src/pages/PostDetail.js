@@ -1,17 +1,21 @@
-import { useLoaderData } from "react-router-dom";
-import BlogPostDetail from "../components/Blog/PostDetail";
+import { Outlet, useLoaderData } from "react-router-dom";
+import BlogPostDetail from "../components/Post/PostDetail";
 import { getPost } from "../utils/api";
 
 const PostDetail = () => {
-
   const loadedPost = useLoaderData();
-  
-  return <BlogPostDetail post={loadedPost} />
-}
+
+  return (
+    <>
+      <BlogPostDetail post={loadedPost} />
+      <Outlet />
+    </>
+  );
+};
 
 export default PostDetail;
 
-export function loader({params}) {
-  const id = params.id
-  return getPost(id)
+export function loader({ params }) {
+  const id = params.id;
+  return getPost(id);
 }

@@ -2,8 +2,8 @@
 
 .post {
   padding: 10px 20px;
+  margin-bottom: 20px;
   border-top: 1px solid $secondColor;
-  text-align: left;
   &__tags {
     display: block;
     padding: 10px 0;
@@ -14,9 +14,14 @@
     margin-bottom: 15px;
     font-size: 32px;
   }
-
   &__text {
+    margin-bottom: 50px;
   }
+
+  &__tags, &__title, &__text {
+    text-align: left;
+  }
+
 }
 
 .post--gold {
@@ -25,4 +30,14 @@
 
 .post__tags--gold {
   color: $mainColor;
+}
+
+.button {
+  background-color: $secondColor;
+  color: #00325c
+}
+
+.button--gold {
+  background-color: $mainColor;
+  color: #5e5000
 }

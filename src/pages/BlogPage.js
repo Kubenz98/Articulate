@@ -1,11 +1,15 @@
 import { getPosts } from "../utils/api";
 import Blog from "../components/Blog/Blog";
-const BlogPage = () => {
+import { Outlet } from "react-router-dom";
 
+const BlogPage = () => {
   return (
-    <Blog />
-  )
-}
+    <>
+      <Blog />
+      <Outlet />
+    </>
+  );
+};
 
 export default BlogPage;
 

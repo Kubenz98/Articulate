@@ -1,5 +1,5 @@
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import classes from "./MainNavigation.module.scss";
 
 
@@ -7,7 +7,7 @@ const MainNavigation = () => {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <span>Blog</span>
+        <Link to='/'>Blog</Link>
       </div>
       <nav>
         <ul>

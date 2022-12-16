@@ -19,7 +19,21 @@ main {
   text-align: center;
 }
 
+ul {
+  list-style: none;
+}
+
 h1 {
   font-weight: 600;
   font-size: 40px;
+}
+
+.button {
+  padding: 5px 15px;
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 4px;
+  user-select: none;
 }

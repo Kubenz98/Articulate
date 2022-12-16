@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import classes from "./Blog.module.scss";
-import BlogPost from "./Posts";
+import BlogPost from "../Post/Post";
 
 const Blog = () => {
   const data = useLoaderData();
