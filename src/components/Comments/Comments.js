@@ -1,11 +1,9 @@
-import { useLoaderData } from "react-router-dom";
-import { getPostComments } from "../../utils/api";
 import CommentItem from "./CommentItem";
 
-const Comments = () => {
-  const loadedData = useLoaderData();
-  const comments = loadedData.comments;
-  
+const Comments = (props) => {
+
+  const comments = props.data.comments;
+
   return (
     <div>
       <ul>
@@ -23,7 +21,3 @@ const Comments = () => {
 };
 
 export default Comments;
-
-export function loader({ params }) {
-  return getPostComments(params.id);
-}

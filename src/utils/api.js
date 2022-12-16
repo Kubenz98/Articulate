@@ -31,7 +31,7 @@ export const getPost = async (id) => {
 };
 
 export const getPostComments = async (id) => {
-  const data = await fetch(`https://dummyjson.com/postss/${id}/comments`).then(
+  const data = await fetch(`https://dummyjson.com/posts/${id}/comments`).then(
     (response) => {
       if (!response.ok) {
         throw new Error('Could not load comments.')

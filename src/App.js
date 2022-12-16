@@ -8,7 +8,7 @@ import PostDetail, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./components/RootLayout/RootLayout";
 import Blog, { loader as postsLoader } from "./pages/Blog";
 import Welcome from "./pages/Welcome";
-import Comments, { loader as commentsLoader } from "./components/Comments/Comments";
+import Comments, { loader as commentsLoader } from "./pages/Comments";
 import Error from "./pages/Error";
 
 function App() {

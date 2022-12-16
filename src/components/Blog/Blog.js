@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router-dom";
 import classes from "./Blog.module.scss";
 import BlogPost from "../Post/Post";
 

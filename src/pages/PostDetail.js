@@ -1,13 +1,18 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
+import { Outlet, useLoaderData, defer, Await } from "react-router-dom";
 import BlogPostDetail from "../components/Post/PostDetail";
 import { getPost } from "../utils/api";
 
 const PostDetail = () => {
-  const loadedPost = useLoaderData();
+  const data = useLoaderData();
 
   return (
     <>
-      <BlogPostDetail postData={loadedPost} />
+      <Suspense fallback={<p>Loading...</p>}>
+        <Await resolve={data.post}>
+          {(loadedPost) => <BlogPostDetail postData={loadedPost} />}
+        </Await>
+      </Suspense>
       <Outlet />
     </>
   );
@@ -15,7 +20,7 @@ const PostDetail = () => {
 
 export default PostDetail;
 
-export function loader({ params }) {
+export async function loader({ params }) {
   const id = params.id;
-  return getPost(id);
+  return defer({ post: getPost(id) });
 }
