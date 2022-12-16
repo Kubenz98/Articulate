@@ -9,8 +9,8 @@
   right: 0;
   height: 70px;
   padding: 0 10px;
-  box-shadow: 0 2px 40px -2px rgba(0, 0, 0, 0.2);
-  background-color: #222;
+  box-shadow: $navBoxShadow;
+  background-color: $navColor;
   z-index: 1;
   & .logo {
     display: flex;
@@ -27,13 +27,28 @@
     }
   }
 
-  & nav {
+  & .nav {
+      position: fixed;
+      top: 0;
+      right: -150px;
+      bottom: 0;
+      width: 150px;
+      transition: 0.2s;
+      @media (min-width: 360px) {
+        right: -200px;
+        width: 200px;
+      }
+      &--active {
+        right: 0;
+      }
     & ul {
       display: flex;
-      justify-content: center;
-      list-style: none;
+      flex-direction: column;
+      height: 100%;
+      background-color: $navColor;
       & li {
         padding: 20px;
+        text-align: center;
         & a {
           font-size: 22px;
           text-decoration: none;
@@ -46,6 +61,13 @@
             color: $mainColor;
           }
         }
+      }
+    }
+    &--horizontal {
+      position: static;
+      width: auto;
+      ul {
+        flex-direction: row;
       }
     }
   }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Comments from "../Comments/Comments";
 import classes from "./PostDetail.module.scss"
 
 const BlogPostDetail = (props) => {

@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { getUserFromComments } from "../../utils/api";
 import classes from "./CommentItem.module.scss"
 
 const CommentItem = (props) => {
