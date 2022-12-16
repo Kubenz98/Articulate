@@ -1,13 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 import { getPostComments } from "../../utils/api";
 import CommentItem from "./CommentItem";
-import classes from "./Comments.module.scss";
+
 const Comments = () => {
   const loadedData = useLoaderData();
   const comments = loadedData.comments;
   
   return (
-    <div className={classes.comments}>
+    <div>
       <ul>
         {comments.map((comment) => (
           <CommentItem

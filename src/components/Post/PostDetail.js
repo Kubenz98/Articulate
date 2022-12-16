@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import classes from "./PostDetail.module.scss"
 
 const BlogPostDetail = (props) => {
-console.log(props.postData.user);
-
+  
   const [showComments, setShowComments] = useState(false);
 
   let postClass = classes.post;
