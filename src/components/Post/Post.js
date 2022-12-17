@@ -1,15 +1,21 @@
-import classes from "./Post.module.scss"
-import { Link } from "react-router-dom";
+import classes from "./Post.module.scss";
+import { useNavigate } from "react-router-dom";
+
 const BlogPost = (props) => {
 
+  const navigate = useNavigate();
+
+  const link = () => {
+    navigate(`/blog/${props.id.toString()}`);
+  };
   return (
-    <li className={classes.post}>
-      <Link to={`${props.id.toString()}`}>
-      <p>{props.tags.join(", ")}</p>
-      <h3>{props.title}</h3>
-      </Link>
+    <li className={classes.post} onClick={link}>
+      <div>
+        <p>{props.tags.join(", ")}</p>
+        <h3>{props.title}</h3>
+      </div>
     </li>
-  )
-}
+  );
+};
 
 export default BlogPost;

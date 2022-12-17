@@ -1,0 +1,32 @@
+.user {
+  display: flex;
+  flex-direction: column;
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #111;
+    &-avatar {
+      width: 200px;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: 1px solid #666;
+      & img {
+        width: 100%;
+      }
+    }
+    &-nick {
+      margin-top: 5px;
+    }
+  }
+  &__posts {
+    margin-top: 50px;
+    padding-bottom: 50px;
+    & ul {
+      & li {
+        box-shadow: none;
+      }
+    }
+  }
+}

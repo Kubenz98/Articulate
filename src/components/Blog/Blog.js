@@ -1,11 +1,11 @@
-import classes from "./Blog.module.scss";
+
 import BlogPost from "../Post/Post";
 
 const Blog = (props) => {
-
+  
   return (
     <>
-      <ul className={classes.list}>
+      <ul className="list">
         {props.data.posts.map((post) => (
           <BlogPost
             key={post.id}
