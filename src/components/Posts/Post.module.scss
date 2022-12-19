@@ -1,20 +1,15 @@
 @import "../../utils/scss/variables.scss";
 
 .post {
+  display: block;
   width: 100%;
   margin: 20px auto 0;
   background-color: $postBackground;
   border-radius: 3px;
   border-top: 1px solid $mainColor;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s;
-  &:nth-child(odd) {
-    border-top: 1px solid $secondColor;
-    & p {
-      color: $secondColor;
-    }
-  }
   &:hover {
     background-color: $postHover;
     transform: scale(1.05);

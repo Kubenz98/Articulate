@@ -1,8 +1,7 @@
 import classes from "./Post.module.scss";
 import { useNavigate } from "react-router-dom";
 
-const BlogPost = (props) => {
-
+const Post = (props) => {
   const navigate = useNavigate();
 
   const link = () => {
@@ -18,4 +17,4 @@ const BlogPost = (props) => {
   );
 };
 
-export default BlogPost;
+export default Post;

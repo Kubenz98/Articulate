@@ -5,20 +5,12 @@ import classes from "./PostDetail.module.scss"
 const BlogPostDetail = (props) => {
     
   const [showComments, setShowComments] = useState(false);
-  
-  let postClass = classes.post;
-  let tagsClass = classes['post__tags'];
-  let buttonClass = `button ${classes.button}`
-
-  if(props.postData.post.id % 2 === 0) {
-    postClass = `${classes.post} ${classes['post--gold']}`;
-    tagsClass = `${classes['post__tags']} ${classes['post__tags--gold']}`;
-    buttonClass = `button ${classes.button} ${classes['button--gold']}`
-  }
 
   const commentsHandler = () => {
     setShowComments(state => !state);
   }
+
+  const buttonClass = `button ${classes.button}`;
 
   let button = <Link to='comments' className={buttonClass} onClick={commentsHandler}>{showComments ? 'Hide Comments' : 'Show Comments'}</Link>;
 
@@ -34,8 +26,8 @@ const BlogPostDetail = (props) => {
   
   
   return (
-    <div className={postClass}>
-      <span className={tagsClass}>{postTags.join(", ")}</span>
+    <div className={classes.post}>
+      <span className={classes['post__tags']}>{postTags.join(", ")}</span>
     <h3 className={classes['post__title']}>{postTitle}</h3>
     <p className={classes['post__text']}>{postBody}</p>
     <Link to={`/users/${userId}`} relative='route' className={classes['post__author']}>author: <strong>{user}</strong></Link>

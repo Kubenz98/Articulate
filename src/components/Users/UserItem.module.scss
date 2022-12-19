@@ -1,0 +1,29 @@
+@import '../../utils/scss/variables';
+.user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: $postBackground;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 4px;
+  @media (min-width: 700px) {
+    margin-bottom: 0;
+  }
+  &:hover {
+    background-color: $postHover;
+  }
+  &:hover &__image {
+    background-color: $avatarHover;
+  }
+  &__image{
+    width: 80px;
+    margin: 10px;
+    border-radius: 6px;
+    background-color: #444;
+    & img {
+      width: 100%;
+    }
+  }
+}

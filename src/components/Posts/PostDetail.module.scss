@@ -3,11 +3,11 @@
 .post {
   padding: 10px 20px;
   margin-bottom: 20px;
-  border-top: 1px solid $secondColor;
+  border-top: 1px solid $mainColor;
   &__tags {
     display: block;
     padding: 10px 0;
-    color: $secondColor;
+    color: $mainColor;
     font-style: italic;
   }
   &__title {
@@ -45,24 +45,11 @@
   }
 }
 
-.post--gold {
-  border-color: $mainColor;
-}
-
-.post__tags--gold {
-  color: $mainColor;
-}
-
 .button {
-  background-color: $secondColor;
-  color: #00325c;
+  background-color: $mainColor;
+  color: #5e5000;
   transition: 0.2s background-color;
   &:hover {
     background-color: $buttonHover;
   }
-}
-
-.button--gold {
-  background-color: $mainColor;
-  color: #5e5000;
 }

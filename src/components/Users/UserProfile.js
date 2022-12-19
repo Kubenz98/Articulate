@@ -1,5 +1,5 @@
 import classes from "./UserProfile.module.scss";
-import Blog from "../Blog/Blog";
+import Posts from "../Posts/AllPosts";
 
 const UserProfile = (props) => {
   
@@ -16,7 +16,7 @@ const UserProfile = (props) => {
         </div>
         <div className={classes["user__posts"]}>
           <h1>User Posts</h1>
-          <Blog data={props.posts} />
+          <Posts data={props.posts} />
         </div>
       </div>
     </>

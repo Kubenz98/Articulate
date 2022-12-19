@@ -65,3 +65,14 @@ export const getUser = async (id) => {
   return { userData, userPosts };
 };
 
+export const getAllUsers = async () => {
+  const users = await fetch("https://dummyjson.com/users?limit=100").then(
+    (response) => {
+      if (!response.ok) {
+        throw new Error("Could not load users.");
+      }
+      return response.json();
+    }
+  );
+  return users;
+};

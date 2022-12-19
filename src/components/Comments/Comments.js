@@ -5,7 +5,7 @@ const Comments = (props) => {
   const comments = props.data.comments;
   
   if(comments.length === 0) {
-    return <p>No comments added yet.</p>
+    return <p className="text">No comments added yet.</p>
   }
   
   return (

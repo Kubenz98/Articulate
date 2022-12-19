@@ -11,6 +11,7 @@ import Welcome from "./pages/Welcome";
 import Comments, { loader as commentsLoader } from "./pages/Comments";
 import Error from "./pages/Error";
 import User, { loader as userLoader } from "./pages/UserProfile";
+import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +26,7 @@ function App() {
           >
             <Route path='comments' element={<Comments />} loader={commentsLoader} />
           </Route>
+          <Route path='users' element={<AllUsers />} loader={allUsersLoader} />
           <Route path='users/:id' element={<User />} loader={userLoader} />
       </Route>
     )

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Outlet, useLoaderData, defer, Await } from "react-router-dom";
-import BlogPostDetail from "../components/Post/PostDetail";
+import BlogPostDetail from "../components/Posts/PostDetail";
 import { getPost } from "../utils/api";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 

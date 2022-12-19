@@ -1,13 +1,17 @@
 
-import BlogPost from "../Post/Post";
+import Post from "./Post";
 
-const Blog = (props) => {
-  
+const Posts = (props) => {
+
+  if(props.data.posts.length === 0) {
+    return <p className="text">There are no posts yet!</p>
+  }
+    
   return (
     <>
       <ul className="list">
         {props.data.posts.map((post) => (
-          <BlogPost
+          <Post
             key={post.id}
             id={post.id}
             title={post.title}
@@ -19,4 +23,4 @@ const Blog = (props) => {
   );
 };
 
-export default Blog;
+export default Posts;

@@ -25,7 +25,11 @@ ul {
 
 h1 {
   font-weight: 600;
-  font-size: 40px;
+  font-size: 34px;
+}
+
+.title--left {
+  text-align: left;
 }
 
 .button {
@@ -53,4 +57,8 @@ h1 {
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.text {
+  font-size: 24px;
 }
