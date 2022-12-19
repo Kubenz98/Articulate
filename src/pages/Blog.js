@@ -8,14 +8,11 @@ const BlogPage = () => {
   const data = useLoaderData();
 
   return (
-    <>
-      <h1 className={`title title--left`}>Blog Posts</h1>
       <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.posts}>
         {(loadedPosts) => <Posts data={loadedPosts} />}
         </Await>
       </Suspense>
-    </>
   );
 };
 
