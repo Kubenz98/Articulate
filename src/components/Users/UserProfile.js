@@ -1,5 +1,5 @@
 import classes from "./UserProfile.module.scss";
-import Posts from "../Posts/AllPosts";
+import PostsList from "../Posts/PostsList";
 
 const UserProfile = (props) => {
   
@@ -16,7 +16,7 @@ const UserProfile = (props) => {
         </div>
         <div className={classes["user__posts"]}>
           <h1>User Posts</h1>
-          <Posts data={props.posts} />
+          <PostsList data={props.posts} isOnUserProfile={true} />
         </div>
       </div>
     </>

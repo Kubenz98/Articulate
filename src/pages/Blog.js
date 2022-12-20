@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { getPosts } from "../utils/api";
-import Posts from "../components/Posts/AllPosts";
+import PostsList from "../components/Posts/PostsList";
 import { useLoaderData, defer, Await } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
@@ -8,11 +8,14 @@ const BlogPage = () => {
   const data = useLoaderData();
 
   return (
+    <>
+      {/* <h1 className="title--left">Blog Posts</h1> */}
       <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.posts}>
-        {(loadedPosts) => <Posts data={loadedPosts} />}
+          {(loadedPosts) => <PostsList data={loadedPosts} />}
         </Await>
       </Suspense>
+    </>
   );
 };
 

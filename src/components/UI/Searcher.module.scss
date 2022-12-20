@@ -1,0 +1,30 @@
+@import "../../utils/scss/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 700px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.title {
+  text-align: left;
+}
+
+.searcher {
+  margin: 10px 0 20px;
+  padding: 3px;
+  font-size: 20px;
+  border-radius: 3px;
+  border: none;
+  transition: background-color 0.2s, color 0.2s;
+  &:focus {
+    outline-offset: unset;
+    background-color: $mainColor;
+    color: $buttonFontColor;
+    outline: none;
+  }
+}

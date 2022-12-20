@@ -1,3 +1,4 @@
+import React from "react";
 import classes from "./Post.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -17,4 +18,4 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+export default React.memo(Post);

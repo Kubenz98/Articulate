@@ -47,7 +47,7 @@
 
 .button {
   background-color: $mainColor;
-  color: #5e5000;
+  color: $buttonFontColor;
   transition: 0.2s background-color;
   &:hover {
     background-color: $buttonHover;
