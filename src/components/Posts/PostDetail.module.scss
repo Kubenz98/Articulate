@@ -49,7 +49,9 @@
   background-color: $mainColor;
   color: $buttonFontColor;
   transition: 0.2s background-color;
-  &:hover {
-    background-color: $buttonHover;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: $buttonHover;
+    }
   }
 }

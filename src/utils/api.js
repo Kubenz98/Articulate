@@ -76,3 +76,32 @@ export const getAllUsers = async () => {
   );
   return users;
 };
+
+export async function addPost(data) {
+  const post = {
+    title: data.get("title"),
+    tags: data.get("tags"),
+    body: data.get("text"),
+    userId: 5,
+  };
+
+  if (post.title.trim().length < 3 || post.body.trim().length < 5) {
+    return { isError: true, message: "Invalid input data provided" };
+  }
+
+  await fetch("https://dummyjson.com/posts/add", {
+    method: "POST",
+    body: JSON.stringify(post),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw response;
+      }
+      return response.json();
+    })
+    .then((response) => console.log(response));
+}

@@ -12,6 +12,7 @@ import Comments, { loader as commentsLoader } from "./pages/Comments";
 import Error from "./pages/Error";
 import User, { loader as userLoader } from "./pages/UserProfile";
 import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
+import NewPost, { action as newPostAction } from "./pages/NewPost";
 
 function App() {
   const router = createBrowserRouter(
@@ -19,6 +20,7 @@ function App() {
       <Route path="/" element={<RootLayout />} errorElement={<Error />}>
         <Route index element={<Welcome />} />
         <Route path="blog" element={<Blog />} loader={postsLoader} />
+        <Route path="blog/new" element={<NewPost />} action={newPostAction} />
           <Route
             path="/blog/:id"
             element={<PostDetail />}

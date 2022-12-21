@@ -3,12 +3,13 @@ import ReactPaginate from "react-paginate";
 import useSearcher from "../../hooks/useSearcher";
 import Searcher from "../UI/Searcher";
 import usePaginate from "../../hooks/usePaginate";
+import { Link } from "react-router-dom";
 
 const Posts = (props) => {
   const { posts } = props.data;
 
   const { filteredItems: filteredPosts, inputChangeHandler } = useSearcher(posts);
-
+  
  const { currentItems, pageCount, handlePageClick } = usePaginate(filteredPosts, 21);
   
   if (filteredPosts.length === 0 && props.isOnUserProfile) {
@@ -50,6 +51,9 @@ const Posts = (props) => {
         onChange={inputChangeHandler}
         placeholder="search by title"
       />
+      <div className="link-container">
+      <Link to='new' className="button button--link">Add Post</Link>
+      </div>
       <ul className="list">
         {currentItems.map((post) => (
           <Post

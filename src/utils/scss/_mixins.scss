@@ -1,0 +1,14 @@
+@mixin input {
+  border-radius: $inputRadius;
+  border: none;
+  transition: background-color 0.2s, color 0.2s;
+  &:focus {
+    outline-offset: unset;
+    background-color: $mainColor;
+    color: $buttonFontColor;
+    outline: none;
+  }
+  &:hover {
+    background-color: $mainColor;
+  }
+}

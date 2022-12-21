@@ -9,7 +9,6 @@ const BlogPage = () => {
 
   return (
     <>
-      {/* <h1 className="title--left">Blog Posts</h1> */}
       <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.posts}>
           {(loadedPosts) => <PostsList data={loadedPosts} />}
