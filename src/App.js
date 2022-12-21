@@ -13,6 +13,7 @@ import Error from "./pages/Error";
 import User, { loader as userLoader } from "./pages/UserProfile";
 import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
 import NewPost, { action as newPostAction } from "./pages/NewPost";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,15 +22,20 @@ function App() {
         <Route index element={<Welcome />} />
         <Route path="blog" element={<Blog />} loader={postsLoader} />
         <Route path="blog/new" element={<NewPost />} action={newPostAction} />
+        <Route
+          path="/blog/:id"
+          element={<PostDetail />}
+          loader={postDetailLoader}
+        >
           <Route
-            path="/blog/:id"
-            element={<PostDetail />}
-            loader={postDetailLoader}
-          >
-            <Route path='comments' element={<Comments />} loader={commentsLoader} />
-          </Route>
-          <Route path='users' element={<AllUsers />} loader={allUsersLoader} />
-          <Route path='users/:id' element={<User />} loader={userLoader} />
+            path="comments"
+            element={<Comments />}
+            loader={commentsLoader}
+          />
+        </Route>
+        <Route path="users" element={<AllUsers />} loader={allUsersLoader} />
+        <Route path="users/:id" element={<User />} loader={userLoader} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

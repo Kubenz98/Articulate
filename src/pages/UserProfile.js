@@ -29,4 +29,3 @@ export function loader({ params }) {
   const { id } = params;
   return defer({ user: getUser(id) });
 }
-// posts: getUserPosts(id)
