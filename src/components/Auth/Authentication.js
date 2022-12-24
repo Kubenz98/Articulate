@@ -14,10 +14,10 @@ const Authentication = (props) => {
 
   useEffect(() => {
     if (typeof action === "object") {
+      const expirationTime = Date.now() + action.expiresIn * 1000
       const token = action.idToken;
-      authCtx.login(token);
+      authCtx.login(token, expirationTime);
       navigate("/");
-
     } else setError(action);
   }, [action, authCtx, navigate]);
 
