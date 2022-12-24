@@ -25,7 +25,7 @@ export default NewPost;
 
 export async function action({ request }) {
   const data = await request.formData();
-
+  
   const validationError = await addPost(data);
 
   if (validationError) {

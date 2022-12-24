@@ -13,13 +13,18 @@ import Error from "./pages/Error";
 import User, { loader as userLoader } from "./pages/UserProfile";
 import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
 import NewPost, { action as newPostAction } from "./pages/NewPost";
+import AuthPage, { action as authAction } from "./pages/Authentication";
 import NotFound from "./pages/NotFound";
+import SignUpPage, { action as signUpAction } from "./pages/Signup";
+
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />} errorElement={<Error />}>
         <Route index element={<Welcome />} />
+        <Route path="login" element={<AuthPage />} action={authAction} errorElement={<Error />}/>
+        <Route path="signup" element={<SignUpPage />} action={signUpAction} />
         <Route path="blog" element={<Blog />} loader={postsLoader} />
         <Route path="blog/new" element={<NewPost />} action={newPostAction} />
         <Route
