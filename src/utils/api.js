@@ -1,3 +1,10 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+
 export const getPosts = async () => {
   const data = await fetch("https://dummyjson.com/posts?limit=150").then(
     (response) => {
@@ -82,14 +89,14 @@ export async function addPost(data) {
     title: data.get("title"),
     tags: data.get("tags"),
     body: data.get("text"),
-    userId: 5,
+    user: "test",
   };
 
   if (post.title.trim().length < 3 || post.body.trim().length < 5) {
     return { isError: true, message: "Invalid input data provided" };
   }
 
-  await fetch("https://dummyjson.com/posts/add", {
+  await fetch("https://blog-9d238-default-rtdb.firebaseio.com/posts.json", {
     method: "POST",
     body: JSON.stringify(post),
     headers: {
@@ -106,7 +113,38 @@ export async function addPost(data) {
     .then((response) => console.log(response));
 }
 
-// export async function createUser(data) {
+export async function signup(auth, email, password) {
+  let errorMessage;
+  await createUserWithEmailAndPassword(auth, email, password).catch((error) => {
+    errorMessage = error.message;
+  });
+  return { error: errorMessage };
+}
 
-//   const 
-// }
+export async function login(auth, email, password) {
+  let errorMessage;
+  await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+    errorMessage = error.message;
+  });
+  return { error: errorMessage };
+}
+
+export function logout(auth) {
+  signOut(auth).catch((error) => {
+    throw new Error(error.message);
+  });
+}
+
+export async function updateUser(auth, data) {
+  let errorMessage;
+  await updateProfile(auth.currentUser, {
+    displayName: data.nick,
+    photoURL:
+      data.gender === "male"
+        ? "https://robohash.org/1"
+        : "https://robohash.org/4",
+  }).catch((error) => {
+    errorMessage = error.message;
+  });
+  return { error: errorMessage };
+}

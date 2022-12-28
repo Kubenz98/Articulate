@@ -1,51 +1,29 @@
-import React, { useState, useEffect, useCallback } from "react";
-
-let logoutTimer;
+import React, { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 const AuthContext = React.createContext({
-  token: "",
   isLoggedIn: false,
-  login: (token) => {},
-  logout: () => {},
+  currentUser: "",
 });
 
-
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem("token");
-  const [token, setToken] = useState(initialToken);
-
-  const userIsLoggedIn = !!token;
-
-  const logoutHandler = useCallback(() => {
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationTime");
-    clearTimeout(logoutTimer);
-  }, []);
-  const loginHandler = (token, expirationTime) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("expirationTime", expirationTime);
-
-    const remainingTime = expirationTime - Date.now();
-    console.log(remainingTime);
-
-    logoutTimer = setTimeout(logoutHandler, remainingTime);
-    setToken(token);
-  };
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
-    if (token) {
-      let timeLeft = localStorage.getItem("expirationTime") - Date.now();
-      if (timeLeft < 6000) timeLeft = 0;
-      logoutTimer = setTimeout(logoutHandler, timeLeft);
-    }
-  }, [token, logoutHandler]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else setCurrentUser(null);
+    });
+    return unsubscribe;
+  }, []);
+
+  const isLoggedIn = !!currentUser;
 
   const contextValue = {
-    token,
-    isLoggedIn: userIsLoggedIn,
-    login: loginHandler,
-    logout: logoutHandler,
+    currentUser,
+    isLoggedIn,
   };
 
   return (

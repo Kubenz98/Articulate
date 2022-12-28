@@ -1,6 +1,8 @@
 import Signup from "../components/Signup/SignUp";
 import formValidation from "../helpers/formValidation";
 import { redirect } from "react-router-dom";
+import { auth } from "../firebase";
+import { signup } from "../utils/api";
 
 const SignupPage = () => {
   return <Signup />;
@@ -22,29 +24,9 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-  try {
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBm8I6JVcL1eyBKSwMfQYqem7aoGZmIPbw",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error.message);
-    }
+  const signUpData = await signup(auth, user.email, user.password);
 
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  if (signUpData.error) throw new Error(signUpData.error);
 
-  return redirect("/");
+  return redirect("/profile");
 }
