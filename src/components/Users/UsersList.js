@@ -6,7 +6,6 @@ import usePaginate from "../../hooks/usePaginate";
 
 const UsersList = (props) => {
   const { users } = props;
-
   const { filteredItems: filteredUsers, inputChangeHandler } = useSearcher(
     users,
     true
@@ -40,10 +39,11 @@ const UsersList = (props) => {
       <ul className="list">
         {currentItems.map((user) => (
           <UserItem
-            key={user.id}
-            id={user.id}
+            key={user.userId}
+            id={user.userId}
             image={user.image}
             username={user.username}
+            email={user.email}
           />
         ))}
       </ul>

@@ -5,146 +5,215 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+import { getDatabase, ref, set, child, push, update } from "firebase/database";
+
 export const getPosts = async () => {
-  const data = await fetch("https://dummyjson.com/posts?limit=150").then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load posts.");
-      }
-      return response.json();
+  const loadedPosts = [];
+  const posts = await fetch(
+    "https://blog-development-33c46-default-rtdb.firebaseio.com/posts.json"
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load posts.");
     }
-  );
-  return data;
+    return response.json();
+  });
+  for (const post in posts) {
+    loadedPosts.push({
+      id: post,
+      title: posts[post].title,
+      tags: posts[post].tags,
+      body: posts[post].body,
+      uid: posts[post].uid,
+      userName: posts[post].user,
+    });
+  }
+  return loadedPosts;
 };
 
 export const getPost = async (id) => {
-  const data = await fetch(`https://dummyjson.com/posts/${id}`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load post.");
-      }
-      return response.json();
+  const data = await fetch(
+    `https://blog-development-33c46-default-rtdb.firebaseio.com/posts/${id}.json`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load post.");
     }
-  );
+    return response.json();
+  });
 
-  const user = await fetch(`https://dummyjson.com/users/${data.userId}`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load author of this post.");
-      }
-      return response.json();
-    }
-  );
-  return { post: data, user };
+  return data;
+};
+
+export const writePostComment = async (auth, body, postId) => {
+  if (!auth || !auth.currentUser) {
+    throw new Error("Sign in to add new comment!");
+  }
+
+  const db = getDatabase();
+
+  const commentData = {
+    body,
+    user: auth.currentUser.displayName,
+    uid: auth.currentUser.uid,
+  };
+
+  const newCommentKey = push(
+    child(ref(db), "posts/" + postId + "comments")
+  ).key;
+
+  const updates = {};
+  updates["/posts/" + postId + "/comments/" + newCommentKey] = commentData;
+  updates["/user-comments/" + auth.currentUser.uid + "/" + newCommentKey] =
+    commentData;
+
+  return update(ref(db), updates);
 };
 
 export const getPostComments = async (id) => {
-  const data = await fetch(`https://dummyjson.com/posts/${id}/comments`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load comments.");
-      }
-      return response.json();
+  const loadedComments = [];
+  const comments = await fetch(
+    `https://blog-development-33c46-default-rtdb.firebaseio.com/posts/${id}/comments.json`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load comments.");
     }
-  );
+    return response.json();
+  });
 
-  return { comments: data.comments };
+  for (const comment in comments) {
+    loadedComments.push({
+      id: comment,
+      body: comments[comment].body,
+      uid: comments[comment].uid,
+      username: comments[comment].user,
+    });
+  }
+
+  return loadedComments;
 };
 
 export const getUser = async (id) => {
-  const userData = await fetch(`https://dummyjson.com/users/${id}`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load user.");
-      }
-      return response.json();
+  const userData = await fetch(
+    `https://blog-development-33c46-default-rtdb.firebaseio.com/users/${id}.json`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load user.");
     }
-  );
+    return response.json();
+  });
 
-  const userPosts = await fetch(`https://dummyjson.com/users/${id}/posts`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load user posts.");
-      }
-      return response.json();
+  const loadedPosts = [];
+
+  const userPosts = await fetch(
+    `https://blog-development-33c46-default-rtdb.firebaseio.com/user-posts/${id}.json`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load user posts.");
     }
-  );
-  return { userData, userPosts };
+    return response.json();
+  });
+  for (const post in userPosts) {
+    loadedPosts.push({
+      id: post,
+      title: userPosts[post].title,
+      tags: userPosts[post].tags,
+    });
+  }
+  return { userData, loadedPosts };
 };
 
 export const getAllUsers = async () => {
-  const users = await fetch("https://dummyjson.com/users?limit=100").then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error("Could not load users.");
-      }
-      return response.json();
+  const loadedUsers = [];
+  const users = await fetch(
+    "https://blog-development-33c46-default-rtdb.firebaseio.com/users.json"
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not load users.");
     }
-  );
-  return users;
+    return response.json();
+  });
+  for (const user in users) {
+    loadedUsers.push({
+      userId: users[user].userId,
+      username: users[user].username,
+      email: users[user].email,
+      image: users[user].profile_picture,
+    });
+  }
+  return loadedUsers;
 };
 
-export async function addPost(data) {
-  const post = {
-    title: data.get("title"),
-    tags: data.get("tags"),
-    body: data.get("text"),
-    user: "test",
-  };
-
-  if (post.title.trim().length < 3 || post.body.trim().length < 5) {
-    return { isError: true, message: "Invalid input data provided" };
-  }
-
-  await fetch("https://blog-9d238-default-rtdb.firebaseio.com/posts.json", {
-    method: "POST",
-    body: JSON.stringify(post),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        console.log(response);
-        throw response;
-      }
-      return response.json();
-    })
-    .then((response) => console.log(response));
-}
-
 export async function signup(auth, email, password) {
-  let errorMessage;
-  await createUserWithEmailAndPassword(auth, email, password).catch((error) => {
-    errorMessage = error.message;
-  });
-  return { error: errorMessage };
+  await createUserWithEmailAndPassword(auth, email, password).then((userData) =>
+    writeUserData(userData.user.uid, userData.user.email)
+  );
 }
 
 export async function login(auth, email, password) {
-  let errorMessage;
-  await signInWithEmailAndPassword(auth, email, password).catch((error) => {
-    errorMessage = error.message;
-  });
-  return { error: errorMessage };
+  await signInWithEmailAndPassword(auth, email, password);
 }
 
 export function logout(auth) {
-  signOut(auth).catch((error) => {
-    throw new Error(error.message);
-  });
+  signOut(auth);
 }
 
 export async function updateUser(auth, data) {
-  let errorMessage;
   await updateProfile(auth.currentUser, {
     displayName: data.nick,
     photoURL:
       data.gender === "male"
         ? "https://robohash.org/1"
         : "https://robohash.org/4",
-  }).catch((error) => {
-    errorMessage = error.message;
   });
-  return { error: errorMessage };
+  await writeUserData(
+    auth.currentUser.uid,
+    auth.currentUser.email,
+    data.nick,
+    auth.currentUser.photoURL
+  );
+}
+
+async function writeUserData(userId, email, name, imageUrl) {
+  const db = getDatabase();
+
+  //profile without customized name and gender
+  if (!name && !imageUrl) {
+    set(ref(db, "users/" + userId), {
+      userId,
+      email: email,
+      username: email,
+      profile_picture: "https://robohash.org/1",
+    });
+  } else {
+    set(ref(db, "users/" + userId), {
+      userId,
+      username: name,
+      email: email,
+      profile_picture: imageUrl,
+    });
+  }
+}
+
+export function writeNewPost(auth, data) {
+  if (!auth || !auth.currentUser) {
+    throw new Error("Sign in to add new posts!");
+  }
+  const db = getDatabase();
+
+  const postData = {
+    title: data.title,
+    tags: data.tags,
+    body: data.body,
+    user: auth.currentUser.displayName,
+    uid: auth.currentUser.uid,
+  };
+
+  // Get a key for a new Post.
+  const newPostKey = push(child(ref(db), "posts")).key;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  const updates = {};
+  updates["/posts/" + newPostKey] = postData;
+  updates["/user-posts/" + auth.currentUser.uid + "/" + newPostKey] = postData;
+
+  return update(ref(db), updates);
 }

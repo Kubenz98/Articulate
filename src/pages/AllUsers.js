@@ -11,7 +11,7 @@ const AllUsers = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Await resolve={data.users}>
-        {(loadedData) => <UsersList users={loadedData.users} />}
+        {(loadedData) => <UsersList users={loadedData} />}
       </Await>
     </Suspense>
   );

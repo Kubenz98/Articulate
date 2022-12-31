@@ -24,9 +24,7 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-  const signUpData = await signup(auth, user.email, user.password);
-
-  if (signUpData.error) throw new Error(signUpData.error);
+  await signup(auth, user.email, user.password);
 
   return redirect("/profile");
 }

@@ -10,14 +10,18 @@ const User = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Await resolve={loaderData.user}>
-        {(loadedData) => (
-          <UserProfile
-            image={loadedData.userData.image}
-            username={loadedData.userData.username}
-            email={loadedData.userData.email}
-            posts={loadedData.userPosts}
-          />
-        )}
+        {(loadedData) => {
+          if (!loadedData.userData) throw new Error("User not found.");
+          else
+            return (
+              <UserProfile
+                image={loadedData.userData.profile_picture}
+                username={loadedData.userData.username}
+                email={loadedData.userData.email}
+                posts={loadedData.loadedPosts}
+              />
+            );
+        }}
       </Await>
     </Suspense>
   );

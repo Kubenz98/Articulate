@@ -22,9 +22,7 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-  const loginData = await login(auth, user.email, user.password);
-
-  if (loginData.error) throw new Error(loginData.error);
+   await login(auth, user.email, user.password);
 
   return redirect("/");
 }

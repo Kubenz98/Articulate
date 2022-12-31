@@ -23,9 +23,7 @@ export async function action({ request }) {
   }
   if (errorMessage) return errorMessage;
 
-  const updateUserData = await updateUser(auth, dataToUpdate);
-
-  if (updateUserData.error) throw new Error(updateUserData.error);
+  await updateUser(auth, dataToUpdate);
 
   return redirect("/");
 }

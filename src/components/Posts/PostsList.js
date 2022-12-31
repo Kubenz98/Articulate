@@ -1,4 +1,4 @@
-import Post from "./Post";
+import Post from "./PostItem";
 import ReactPaginate from "react-paginate";
 import useSearcher from "../../hooks/useSearcher";
 import Searcher from "../UI/Searcher";
@@ -6,7 +6,7 @@ import usePaginate from "../../hooks/usePaginate";
 import { Link } from "react-router-dom";
 
 const Posts = (props) => {
-  const { posts } = props.data;
+  const posts = props.data;
 
   const { filteredItems: filteredPosts, inputChangeHandler } = useSearcher(posts);
   

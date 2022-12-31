@@ -1,22 +1,24 @@
 import AddPost from "../components/Posts/NewPost";
-import { redirect, useNavigate, useNavigation, useActionData } from "react-router-dom";
-import { addPost } from "../utils/api";
+import { redirect, useNavigate, useNavigation } from "react-router-dom";
+import { auth } from "../firebase";
+import { writeNewPost } from "../utils/api";
+import postValidation from "../helpers/newPostValidation";
 
 const NewPost = () => {
-  const data = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation();
-
 
   const cancel = () => {
     navigate(-1);
   };
-  
+
   return (
     <>
       <h1>Add New Post</h1>
-      {data && data.isError && <p className="input-error">{data.message}</p>}
-      <AddPost onCancel={cancel} submitting={navigation.state === 'submitting'} />
+      <AddPost
+        onCancel={cancel}
+        submitting={navigation.state === "submitting"}
+      />
     </>
   );
 };
@@ -24,12 +26,22 @@ const NewPost = () => {
 export default NewPost;
 
 export async function action({ request }) {
-  const data = await request.formData();
   
-  const validationError = await addPost(data);
+  const data = await request.formData();
 
-  if (validationError) {
-    return validationError;
+  const postData = {
+    title: data.get("title"),
+    tags: data.get("tags"),
+    body: data.get("text"),
+  };
+
+  const postIsInvalid = postValidation(postData);
+
+  if (postIsInvalid) {
+    return postIsInvalid;
   }
+
+  await writeNewPost(auth, postData);
+
   return redirect("/blog");
 }

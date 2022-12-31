@@ -8,7 +8,7 @@ import PostDetail, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./pages/RootLayout";
 import Blog, { loader as postsLoader } from "./pages/Blog";
 import Welcome from "./pages/Welcome";
-import Comments, { loader as commentsLoader } from "./pages/Comments";
+import Comments, { loader as commentsLoader, action as commentAction } from "./pages/Comments";
 import Error from "./pages/Error";
 import User, { loader as userLoader } from "./pages/UserProfile";
 import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
@@ -38,6 +38,7 @@ function App() {
             path="comments"
             element={<Comments />}
             loader={commentsLoader}
+            action={commentAction}
           />
         </Route>
         <Route path="users" element={<AllUsers />} loader={allUsersLoader} />

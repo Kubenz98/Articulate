@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Post.module.scss";
+import classes from "./PostItem.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const Post = (props) => {
@@ -11,7 +11,7 @@ const Post = (props) => {
   return (
     <li className={classes.post} onClick={link}>
       <div>
-        <p>{props.tags.join(", ")}</p>
+        <p>{props.tags}</p>
         <h3>{props.title}</h3>
       </div>
     </li>

@@ -25,7 +25,7 @@ const ProfileData = () => {
       <h1>Update Profile</h1>
       <Form method="post" className="form">
         <div className="form__controls">
-          <label htmlFor="gender">Gender</label>
+          <label htmlFor="gender">Gender (changes avatar)</label>
           <select name="gender" id="gender">
             <option value="male">male</option>
             <option value="female">female</option>

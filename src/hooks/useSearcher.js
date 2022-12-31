@@ -10,7 +10,6 @@ const useSearcher = (items, users = false) => {
 
   useEffect(() => {
     let updatedItems = [...items];
-
     const identifier = setTimeout(() => {
       if (users) {
         updatedItems = updatedItems.filter((item) => {
