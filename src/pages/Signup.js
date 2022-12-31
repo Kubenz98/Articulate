@@ -1,11 +1,13 @@
 import Signup from "../components/Signup/SignUp";
 import formValidation from "../helpers/formValidation";
-import { redirect } from "react-router-dom";
+import { redirect, useNavigation } from "react-router-dom";
 import { auth } from "../firebase";
 import { signup } from "../utils/api";
 
 const SignupPage = () => {
-  return <Signup />;
+  const navigation = useNavigation();
+
+  return <Signup submitting={navigation.state === "submitting"} />;
 };
 
 export default SignupPage;
@@ -17,6 +19,8 @@ export async function action({ request }) {
     email: data.get("email"),
     password: data.get("password"),
     passwordRepeat: data.get("password-repeat"),
+    nick: data.get("nick"),
+    gender: data.get("gender"),
   };
 
   const formIsValid = formValidation(user, false);
@@ -24,7 +28,7 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-  await signup(auth, user.email, user.password);
+  await signup(auth, user);
 
-  return redirect("/profile");
+  return redirect("/");
 }

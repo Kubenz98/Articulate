@@ -27,7 +27,7 @@ const Authentication = () => {
           <Link to="../signup">Click here to create new account</Link>
         </div>
         {error && <p className="error-form">{error}</p>}
-        <div className="form__actions">
+        <div className="form__actions" style={{'marginTop' : '40px'}}>
           <button className="button button--link">Login</button>
         </div>
       </Form>

@@ -3,6 +3,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "firebase/auth";
 
 import { getDatabase, ref, set, child, push, update } from "firebase/database";
@@ -142,10 +145,25 @@ export const getAllUsers = async () => {
   return loadedUsers;
 };
 
-export async function signup(auth, email, password) {
-  await createUserWithEmailAndPassword(auth, email, password).then((userData) =>
-    writeUserData(userData.user.uid, userData.user.email)
-  );
+export async function signup(auth, user) {
+  await createUserWithEmailAndPassword(auth, user.email, user.password)
+    .then(async (userData) => {
+      await writeUserData(
+        userData.user.uid,
+        userData.user.email,
+        user.nick,
+        user.gender
+      );
+    })
+    .then(async () => {
+      await updateProfile(auth.currentUser, {
+        displayName: user.nick,
+        photoURL:
+          user.gender === "male"
+            ? "https://robohash.org/1"
+            : "https://robohash.org/4",
+      });
+    });
 }
 
 export async function login(auth, email, password) {
@@ -172,25 +190,24 @@ export async function updateUser(auth, data) {
   );
 }
 
-async function writeUserData(userId, email, name, imageUrl) {
+export async function updateUserPassword(user, newPassword, oldPassword) {
+  const credential = EmailAuthProvider.credential(user.email, oldPassword);
+
+  await reauthenticateWithCredential(user, credential);
+
+  updatePassword(user, newPassword);
+}
+
+async function writeUserData(userId, email, name, gender) {
   const db = getDatabase();
 
-  //profile without customized name and gender
-  if (!name && !imageUrl) {
-    set(ref(db, "users/" + userId), {
-      userId,
-      email: email,
-      username: email,
-      profile_picture: "https://robohash.org/1",
-    });
-  } else {
-    set(ref(db, "users/" + userId), {
-      userId,
-      username: name,
-      email: email,
-      profile_picture: imageUrl,
-    });
-  }
+  set(ref(db, "users/" + userId), {
+    userId,
+    username: name,
+    email: email,
+    profile_picture:
+      gender === "male" ? "https://robohash.org/1" : "https://robohash.org/4",
+  });
 }
 
 export function writeNewPost(auth, data) {

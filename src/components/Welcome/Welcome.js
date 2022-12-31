@@ -3,7 +3,6 @@ import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import classes from "./Welcome.module.scss";
 import { auth } from "../../firebase";
-import { logout } from "../../utils/api";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
@@ -11,9 +10,6 @@ const Welcome = () => {
   const authCtx = useContext(AuthContext);
   const [user, loading, error] = useAuthState(auth);
 
-  const logoutHandler = () => {
-    logout(auth);
-  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -26,13 +22,7 @@ const Welcome = () => {
         </Link>
       )}
       {authCtx.isLoggedIn && <p>Check out the latest posts on the blog!</p>}
-      {auth.currentUser && (
-        <div className={classes.container}>
-          <button className="button button--link" onClick={logoutHandler}>
-            logout
-          </button>
-        </div>
-      )}
+
     </>
   );
 };

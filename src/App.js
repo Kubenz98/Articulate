@@ -16,7 +16,7 @@ import NewPost, { action as newPostAction } from "./pages/NewPost";
 import AuthPage, { action as authAction } from "./pages/Authentication";
 import NotFound from "./pages/NotFound";
 import SignUpPage, { action as signUpAction } from "./pages/Signup";
-import Profile, { action as ProfileAction } from "./pages/Profile";
+import Profile, { action as profileAction } from "./pages/Profile";
 
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         <Route index element={<Welcome />} />
         <Route path="login" element={<AuthPage />} action={authAction} errorElement={<Error />}/>
         <Route path="signup" element={<SignUpPage />} action={signUpAction} />
-        <Route path="profile" element={<Profile />} action={ProfileAction} />
+        <Route path="profile" element={<Profile />} action={profileAction} />
         <Route path="blog" element={<Blog />} loader={postsLoader} />
         <Route path="blog/new" element={<NewPost />} action={newPostAction} />
         <Route

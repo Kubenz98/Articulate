@@ -4,6 +4,8 @@ import { useMediaQuery } from "react-responsive";
 import Burger from "../Burger/Burger";
 import classes from "./MainNavigation.module.scss";
 import AuthContext from "../../store/auth-context";
+import { auth } from "../../firebase";
+import { logout } from "../../utils/api";
 
 const MainNavigation = () => {
   const [navActive, setNavActive] = useState(false);
@@ -16,6 +18,11 @@ const MainNavigation = () => {
 
   const closeNav = () => {
     setNavActive(false);
+  };
+
+  const logoutUser = () => {
+    setNavActive(false);
+    logout(auth);
   };
 
   const navHorizontal = useMediaQuery({
@@ -78,6 +85,25 @@ const MainNavigation = () => {
               Users
             </NavLink>
           </li>
+          {authCtx.isLoggedIn ? (
+            <li>
+              <NavLink to="/" onClick={logoutUser}>
+                Logout
+              </NavLink>
+            </li>
+          ) : (
+            <li>
+              <NavLink
+                to="/login"
+                className={(link) =>
+                  link.isActive ? classes.active : undefined
+                }
+                onClick={closeNav}
+              >
+                Login
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
