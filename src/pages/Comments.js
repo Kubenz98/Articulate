@@ -32,6 +32,10 @@ export async function action({ request, params }) {
 
   const commentBody = data.get("comment");
 
+  if(commentBody.length < 3) {
+    return 'The comment must be at least 3 characters long'
+  }
+
   await writePostComment(auth, commentBody, id);
 
   reset = true;

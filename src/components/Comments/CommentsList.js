@@ -1,33 +1,40 @@
-import { useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Form } from "react-router-dom";
 import CommentItem from "./CommentItem";
 import { useActionData } from "react-router-dom";
 
 const Comments = (props) => {
-
-  const reset = useActionData();
+  const action = useActionData();
   const comments = props.data;
   const commentRef = useRef();
+  const [error, setError] = useState(null);
 
-  const cleanTextArea = () => {
-    commentRef.current.value = ''
-  }
+  const cleanComment = () => {
+    commentRef.current.value = "";
+    setError(null)
+  };
 
-  if(reset) cleanTextArea();
-  
+  useEffect(() => {
+    if (typeof action === "boolean") {
+      cleanComment();
+    } else setError(action);
+  }, [action]);
+
   return (
     <div>
-      <Form className="form" method="post" style={{'marginBottom' : '30px'}}>
+      <Form className="form" method="post" style={{ marginBottom: "30px" }}>
         <div className="form__controls">
           <textarea
             id="comment"
             name="comment"
             rows={3}
             required
+            minLength={3}
             placeholder="write a comment here"
             ref={commentRef}
           />
         </div>
+        {error && <p className="error-form">{error}</p>}
         <div className="form__actions">
           <button
             type="submit"
