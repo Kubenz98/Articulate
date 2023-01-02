@@ -8,7 +8,21 @@ import {
   EmailAuthProvider,
 } from "firebase/auth";
 
-import { getDatabase, ref, set, child, push, update } from "firebase/database";
+import {
+  getStorage,
+  ref as stRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+
+import {
+  getDatabase,
+  ref as dbRef,
+  set,
+  child,
+  push,
+  update,
+} from "firebase/database";
 
 export const getPosts = async () => {
   const loadedPosts = [];
@@ -60,7 +74,7 @@ export const writePostComment = async (auth, body, postId) => {
   };
 
   const newCommentKey = push(
-    child(ref(db), "posts/" + postId + "comments")
+    child(dbRef(db), "posts/" + postId + "comments")
   ).key;
 
   const updates = {};
@@ -68,7 +82,7 @@ export const writePostComment = async (auth, body, postId) => {
   updates["/user-comments/" + auth.currentUser.uid + "/" + newCommentKey] =
     commentData;
 
-  return update(ref(db), updates);
+  return update(dbRef(db), updates);
 };
 
 export const getPostComments = async (id) => {
@@ -201,7 +215,7 @@ export async function updateUserPassword(user, newPassword, oldPassword) {
 async function writeUserData(userId, email, name, gender) {
   const db = getDatabase();
 
-  set(ref(db, "users/" + userId), {
+  set(dbRef(db, "users/" + userId), {
     userId,
     username: name,
     email: email,
@@ -210,10 +224,21 @@ async function writeUserData(userId, email, name, gender) {
   });
 }
 
-export function writeNewPost(auth, data) {
+export async function writeNewPost(auth, data) {
   if (!auth || !auth.currentUser) {
     throw new Error("Sign in to add new posts!");
   }
+  const storage = getStorage();
+  const storageRef = stRef(storage, `images/${data.title}`);
+
+  let imageLink;
+
+  await uploadBytes(storageRef, data.image).then(async (snapshot) => {
+    await getDownloadURL(snapshot.ref).then((url) => (imageLink = url));
+  });
+
+  console.log(imageLink);
+
   const db = getDatabase();
 
   const postData = {
@@ -222,15 +247,16 @@ export function writeNewPost(auth, data) {
     body: data.body,
     user: auth.currentUser.displayName,
     uid: auth.currentUser.uid,
+    imageLink,
   };
 
   // Get a key for a new Post.
-  const newPostKey = push(child(ref(db), "posts")).key;
+  const newPostKey = push(child(dbRef(db), "posts")).key;
 
   // Write the new post's data simultaneously in the posts list and the user's post list.
   const updates = {};
   updates["/posts/" + newPostKey] = postData;
   updates["/user-posts/" + auth.currentUser.uid + "/" + newPostKey] = postData;
 
-  return update(ref(db), updates);
+  return update(dbRef(db), updates);
 }

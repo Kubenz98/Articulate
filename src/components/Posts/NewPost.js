@@ -11,7 +11,7 @@ const AddPost = (props) => {
   }, [action]);
 
   return (
-    <Form className='form' method="post">
+    <Form className='form' method="post" encType="multipart/form-data">
       <div className='form__controls'>
         <label htmlFor="title">Title</label>
         <input id="title" name="title" required minLength={3} />
@@ -23,6 +23,10 @@ const AddPost = (props) => {
       <div className='form__controls'>
         <label htmlFor="text">Text</label>
         <textarea id="text" name="text" rows={10} required minLength={10} />
+      </div>
+      <div className='form__controls'>
+        <label htmlFor="image">Image (max size 4mb)</label>
+        <input id="image" name="image" type='file' accept="image/png, image/jpeg"/>
       </div>
       {error && <p className="error-form">{error}</p>}
       <div className='form__actions'>

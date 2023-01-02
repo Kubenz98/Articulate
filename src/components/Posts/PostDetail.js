@@ -1,15 +1,24 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import classes from "./PostDetail.module.scss";
 
 const BlogPostDetail = (props) => {
   const [showComments, setShowComments] = useState(false);
+  const [image, setImage] = useState();
+
+  const { postData } = props;
+
+  useEffect(() => {
+    if (!postData.imageLink) return;
+    const img = new Image();
+    img.src = postData.imageLink;
+    img.onload = () => setImage(img);
+  }, [postData.imageLink]);
 
   const commentsHandler = () => {
     setShowComments((state) => !state);
   };
-
-  const { postData } = props;
 
   const buttonClass = `button ${classes.button}`;
 
@@ -32,13 +41,23 @@ const BlogPostDetail = (props) => {
     );
   }
 
+  console.log(postData.imageLink);
+
   const userId = postData.uid;
 
-  return (
+  console.log(!image || (!image && !postData.imageLink));
+
+  return image || !postData.imageLink ? (
     <div className={classes.post}>
       <span className={classes["post__tags"]}>{postData.tags}</span>
       <h3 className={classes["post__title"]}>{postData.title}</h3>
-      <p className={classes["post__text"]}>{postData.body}</p>
+
+      {image && (
+        <div className={classes["post__image"]}>
+          <img src={image.src} alt="article" />
+        </div>
+      )}
+      <pre className={classes["post__text"]}>{postData.body}</pre>
       <Link
         to={`/users/${userId}`}
         relative="route"
@@ -48,6 +67,8 @@ const BlogPostDetail = (props) => {
       </Link>
       {button}
     </div>
+  ) : (
+    <LoadingSpinner />
   );
 };
 

@@ -6,11 +6,11 @@ import usePaginate from "../../hooks/usePaginate";
 import { Link } from "react-router-dom";
 
 const Posts = (props) => {
-  const posts = props.data;
+  const posts = props.data
 
   const { filteredItems: filteredPosts, inputChangeHandler } = useSearcher(posts);
   
- const { currentItems, pageCount, handlePageClick } = usePaginate(filteredPosts, 21);
+ const { currentItems, pageCount, handlePageClick } = usePaginate(filteredPosts, 9);
   
   if (filteredPosts.length === 0 && props.isOnUserProfile) {
     return <p className="error">This user hasn't added any post yet.</p>;

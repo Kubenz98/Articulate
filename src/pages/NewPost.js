@@ -33,10 +33,13 @@ export async function action({ request }) {
     title: data.get("title"),
     tags: data.get("tags"),
     body: data.get("text"),
+    image: data.get("image")
   };
 
+  console.log(postData.image);
+  
   const postIsInvalid = postValidation(postData);
-
+  
   if (postIsInvalid) {
     return postIsInvalid;
   }
@@ -44,4 +47,5 @@ export async function action({ request }) {
   await writeNewPost(auth, postData);
 
   return redirect("/blog");
+
 }

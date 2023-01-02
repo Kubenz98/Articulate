@@ -11,7 +11,7 @@ const BlogPage = () => {
     <>
       <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.posts}>
-          {(loadedPosts) => <PostsList data={loadedPosts} />}
+          {(loadedPosts) => <PostsList data={loadedPosts.reverse()} />}
         </Await>
       </Suspense>
     </>
