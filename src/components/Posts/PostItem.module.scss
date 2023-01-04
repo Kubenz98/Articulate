@@ -7,12 +7,14 @@
   background-color: $postBackground;
   border-radius: $inputRadius;
   border-top: 1px solid $mainColor;
+  box-shadow: $postShadow;
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s;
   &:hover {
     background-color: $postHover;
     transform: scale(1.02);
+    box-shadow: none;
   }
   &:first-child {
     grid-column: span 2;
