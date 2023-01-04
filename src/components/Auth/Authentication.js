@@ -24,7 +24,7 @@ const Authentication = () => {
           <input id="password" name="password" type="password" />
         </div>
         <div className="form__actions">
-          <Link to="../signup">Click here to create new account</Link>
+          <Link to="../signup" className="link">Click here to create new account</Link>
         </div>
         {error && <p className="error-form">{error}</p>}
         <div className="form__actions" style={{'marginTop' : '40px'}}>

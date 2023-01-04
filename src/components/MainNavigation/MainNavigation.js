@@ -26,7 +26,7 @@ const MainNavigation = () => {
   };
 
   const navHorizontal = useMediaQuery({
-    query: "(min-width: 600px)",
+    query: "(min-width: 700px)",
   });
 
   let navClassHori = `${classes.nav} ${classes["nav--horizontal"]}`;
@@ -39,7 +39,7 @@ const MainNavigation = () => {
     <header className={classes.header}>
       <div className={classes.logo}>
         <Link to="/" onClick={closeNav}>
-          Blog
+          Articulate
         </Link>
       </div>
       <Burger navState={navActive} navHandler={navHandler} />
@@ -69,7 +69,7 @@ const MainNavigation = () => {
           )}
           <li>
             <NavLink
-              to="/blog"
+              to="/articles"
               className={(link) => (link.isActive ? classes.active : undefined)}
               onClick={closeNav}
             >

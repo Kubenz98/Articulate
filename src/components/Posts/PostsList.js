@@ -6,13 +6,17 @@ import usePaginate from "../../hooks/usePaginate";
 import { Link } from "react-router-dom";
 
 const Posts = (props) => {
-  const posts = props.data
+  const posts = props.data;
 
-  const { filteredItems: filteredPosts, inputChangeHandler } = useSearcher(posts);
-  
- const { currentItems, pageCount, handlePageClick } = usePaginate(filteredPosts, 9);
-  
-  if (filteredPosts.length === 0 && props.isOnUserProfile) {
+  const { filteredItems: filteredPosts, inputChangeHandler } =
+    useSearcher(posts);
+
+  const { currentItems, pageCount, handlePageClick } = usePaginate(
+    filteredPosts,
+    8
+  );
+
+  if (posts.length === 0 && props.isOnUserProfile) {
     return <p className="error">This user hasn't added any post yet.</p>;
   }
 
@@ -20,7 +24,7 @@ const Posts = (props) => {
     return (
       <>
         <Searcher
-          title="Blog Posts"
+          title="All Posts"
           onChange={inputChangeHandler}
           placeholder="search by title"
         />
@@ -29,55 +33,53 @@ const Posts = (props) => {
     );
   }
 
-  if (props.isOnUserProfile) {
-    return (
-      <ul className="list">
-        {filteredPosts.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            tags={post.tags}
-          />
-        ))}
-      </ul>
-    );
-  }
-
   return (
     <>
-      <Searcher
-        title="Blog Posts"
-        onChange={inputChangeHandler}
-        placeholder="search by title"
-      />
-      <div className="link-container">
-      <Link to='new' className="button button--link">Add Post</Link>
-      </div>
-      <ul className="list">
-        {currentItems.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            tags={post.tags}
-          />
-        ))}
-      </ul>
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={2}
-        pageCount={pageCount}
-        previousLabel="<"
-        renderOnZeroPageCount={null}
-        containerClassName={'controls'}
-        pageLinkClassName={'pageLink'}
-        previousLinkClassName={'prevLink'}
-        nextLinkClassName={'prevLink'}
-        activeLinkClassName={'activeLink'}
-      />
+      {!props.isOnUserProfile && (
+        <Searcher
+          title="All Posts"
+          onChange={inputChangeHandler}
+          placeholder="search by title"
+        />
+      )}
+      {!props.isOnUserProfile && (
+        <div className="link-container">
+          <Link to="new" className="button button--link">
+            Add Post
+          </Link>
+        </div>
+      )}
+      {
+        <ul className="list">
+          {currentItems.map((post) => (
+            <Post
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              tags={post.tags}
+              body={post.body}
+              imageLink={post.imageLink}
+            />
+          ))}
+        </ul>
+      }
+      {
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+          containerClassName={"controls"}
+          pageLinkClassName={"pageLink"}
+          previousLinkClassName={"prevLink"}
+          nextLinkClassName={"prevLink"}
+          activeLinkClassName={"activeLink"}
+          initialPage={0}
+        />
+      }
     </>
   );
 };

@@ -5,7 +5,7 @@ import classes from "./PostDetail.module.scss";
 
 const BlogPostDetail = (props) => {
   const [showComments, setShowComments] = useState(false);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
 
   const { postData } = props;
 
@@ -15,7 +15,6 @@ const BlogPostDetail = (props) => {
     img.src = postData.imageLink;
     img.onload = () => setImage(img);
   }, [postData.imageLink]);
-
   const commentsHandler = () => {
     setShowComments((state) => !state);
   };
@@ -41,11 +40,7 @@ const BlogPostDetail = (props) => {
     );
   }
 
-  console.log(postData.imageLink);
-
   const userId = postData.uid;
-
-  console.log(!image || (!image && !postData.imageLink));
 
   return image || !postData.imageLink ? (
     <div className={classes.post}>

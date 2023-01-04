@@ -4,21 +4,25 @@ import PostsList from "../components/Posts/PostsList";
 import { useLoaderData, defer, Await } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
-const BlogPage = () => {
+const ArticlesPage = () => {
   const data = useLoaderData();
 
   return (
     <>
       <Suspense fallback={<LoadingSpinner />}>
         <Await resolve={data.posts}>
-          {(loadedPosts) => <PostsList data={loadedPosts.reverse()} />}
+          {(loadedPosts) => {
+            const postsCopy = [...loadedPosts];
+            postsCopy.reverse()
+            return <PostsList data={postsCopy} />;
+          }}
         </Await>
       </Suspense>
     </>
   );
 };
 
-export default BlogPage;
+export default ArticlesPage;
 
 export async function loader() {
   return defer({ posts: getPosts() });

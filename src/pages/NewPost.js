@@ -35,8 +35,6 @@ export async function action({ request }) {
     body: data.get("text"),
     image: data.get("image")
   };
-
-  console.log(postData.image);
   
   const postIsInvalid = postValidation(postData);
   

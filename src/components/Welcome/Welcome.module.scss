@@ -1,9 +1,10 @@
-a {
-  font-size: 20px;
-  color: white;
-  text-underline-offset: 5px;
+@import "../../utils/scss/anims";
+
+.welcome {
+  animation: slide-up 0.5s ease;
 }
 
-.container {
-  margin-top: 20px;
+.text {
+  margin-top: 50px;
+  font-size: 20px;
 }

@@ -42,6 +42,7 @@ export const getPosts = async () => {
       body: posts[post].body,
       uid: posts[post].uid,
       userName: posts[post].user,
+      imageLink: posts[post].imageLink ? posts[post].imageLink : "",
     });
   }
   return loadedPosts;
@@ -133,6 +134,8 @@ export const getUser = async (id) => {
       id: post,
       title: userPosts[post].title,
       tags: userPosts[post].tags,
+      body: userPosts[post].body,
+      imageLink: userPosts[post].imageLink
     });
   }
   return { userData, loadedPosts };
@@ -236,8 +239,6 @@ export async function writeNewPost(auth, data) {
   await uploadBytes(storageRef, data.image).then(async (snapshot) => {
     await getDownloadURL(snapshot.ref).then((url) => (imageLink = url));
   });
-
-  console.log(imageLink);
 
   const db = getDatabase();
 

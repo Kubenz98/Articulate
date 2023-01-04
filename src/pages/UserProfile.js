@@ -12,15 +12,18 @@ const User = () => {
       <Await resolve={loaderData.user}>
         {(loadedData) => {
           if (!loadedData.userData) throw new Error("User not found.");
-          else
+          else {
+            const postsCopy = [...loadedData.loadedPosts];
+            postsCopy.reverse();
             return (
               <UserProfile
                 image={loadedData.userData.profile_picture}
                 username={loadedData.userData.username}
                 email={loadedData.userData.email}
-                posts={loadedData.loadedPosts}
+                posts={postsCopy}
               />
             );
+          }
         }}
       </Await>
     </Suspense>
