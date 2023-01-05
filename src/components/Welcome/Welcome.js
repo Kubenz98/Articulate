@@ -32,6 +32,7 @@ const Welcome = () => {
           up of people from all over the world who share their experiences and
           perspectives. Join us and start sharing your thoughts with others!
         </p>
+        <Link to='posts?page=1' className={classes.link}>Check out all posts!</Link>
         </div>
   );
 };

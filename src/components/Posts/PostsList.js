@@ -3,17 +3,26 @@ import ReactPaginate from "react-paginate";
 import useSearcher from "../../hooks/useSearcher";
 import Searcher from "../UI/Searcher";
 import usePaginate from "../../hooks/usePaginate";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context.js";
 
 const Posts = (props) => {
   const posts = props.data;
-
+  const authCtx = useContext(AuthContext);
+  const location = useLocation();
   const { filteredItems: filteredPosts, inputChangeHandler } =
     useSearcher(posts);
 
-  const { currentItems, pageCount, handlePageClick } = usePaginate(
+  const queryParams = new URLSearchParams(location.search);
+  const currentPage = queryParams.get("page");
+
+  const { currentItems, pageCount, handlePageClick, itemOffset } = usePaginate(
     filteredPosts,
-    8
+    8,
+    "postList",
+    currentPage,
+    props.isOnUserProfile
   );
 
   if (posts.length === 0 && props.isOnUserProfile) {
@@ -33,16 +42,27 @@ const Posts = (props) => {
     );
   }
 
-  return (
-    <>
-      {!props.isOnUserProfile && (
-        <Searcher
-          title="All Posts"
-          onChange={inputChangeHandler}
-          placeholder="search by title"
+  return props.isOnUserProfile ? (
+    <ul className="list">
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          tags={post.tags}
+          body={post.body}
+          imageLink={post.imageLink}
         />
-      )}
-      {!props.isOnUserProfile && (
+      ))}
+    </ul>
+  ) : (
+    <>
+      <Searcher
+        title="All Posts"
+        onChange={inputChangeHandler}
+        placeholder="search by title"
+      />
+      {authCtx.isLoggedIn && (
         <div className="link-container">
           <Link to="new" className="button button--link">
             Add Post
@@ -77,11 +97,10 @@ const Posts = (props) => {
           previousLinkClassName={"prevLink"}
           nextLinkClassName={"prevLink"}
           activeLinkClassName={"activeLink"}
-          initialPage={0}
+          forcePage={itemOffset.page * 1 - 1}
         />
       }
     </>
   );
 };
-
 export default Posts;

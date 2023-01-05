@@ -6,16 +6,19 @@ const postValidation = (postData) => {
     error = "Not enough post content";
   } else if (postData.tags.trim().length === 0) {
     error = "Add tag, please";
-  } else if (postData.image.size > 4000000) {
-    error =
-      "This image is too big. Please upload an image with maximum of size 4mb";
-  } else if (
-    postData.image.type !== "image/jpeg" &&
-    postData.image.type !== "image/png"
-  ) {
-    error =
-      "Wrong type of image. Please upload an image in .png or .jpg format";
   }
+  if (postData.image.size > 0) {
+    if (postData.image.size > 500000) {
+      error =
+        "This image is too big. Please upload an image with maximum of size 500kb";
+    } else if (
+      postData.image.type !== "image/jpeg" &&
+      postData.image.type !== "image/png"
+    ) {
+      error =
+        "Wrong type of image. Please upload an image in .png or .jpg format";
+    }
+  } else return
   return error;
 };
 

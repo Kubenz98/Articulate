@@ -26,24 +26,22 @@ const NewPost = () => {
 export default NewPost;
 
 export async function action({ request }) {
-  
   const data = await request.formData();
 
   const postData = {
     title: data.get("title"),
     tags: data.get("tags"),
     body: data.get("text"),
-    image: data.get("image")
+    image: data.get("image"),
   };
-  
+
   const postIsInvalid = postValidation(postData);
-  
+
   if (postIsInvalid) {
     return postIsInvalid;
   }
 
   await writeNewPost(auth, postData);
 
-  return redirect("/blog");
-
+  return redirect("/posts?page=1");
 }

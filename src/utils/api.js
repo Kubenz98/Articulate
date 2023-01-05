@@ -135,7 +135,7 @@ export const getUser = async (id) => {
       title: userPosts[post].title,
       tags: userPosts[post].tags,
       body: userPosts[post].body,
-      imageLink: userPosts[post].imageLink
+      imageLink: userPosts[post].imageLink,
     });
   }
   return { userData, loadedPosts };
@@ -236,10 +236,13 @@ export async function writeNewPost(auth, data) {
 
   let imageLink;
 
-  await uploadBytes(storageRef, data.image).then(async (snapshot) => {
-    await getDownloadURL(snapshot.ref).then((url) => (imageLink = url));
-  });
-
+  if (data.image) {
+    await uploadBytes(storageRef, data.image).then(async (snapshot) => {
+      await getDownloadURL(snapshot.ref).then((url) => (imageLink = url));
+    });
+  }
+  imageLink =
+    "https://firebasestorage.googleapis.com/v0/b/blog-development-33c46.appspot.com/o/images%2Fdefault_image.jpg?alt=media&token=93bf92c1-8436-47cf-b453-1566162097ed";
   const db = getDatabase();
 
   const postData = {

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import PostDetail, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./pages/RootLayout";
-import Articles, { loader as postsLoader } from "./pages/Articles";
+import Posts, { loader as postsLoader } from "./pages/Posts";
 import Welcome from "./pages/Welcome";
 import Comments, { loader as commentsLoader, action as commentAction } from "./pages/Comments";
 import Error from "./pages/Error";
@@ -27,10 +27,10 @@ function App() {
         <Route path="login" element={<AuthPage />} action={authAction} errorElement={<Error />}/>
         <Route path="signup" element={<SignUpPage />} action={signUpAction} />
         <Route path="profile" element={<Profile />} action={profileAction} />
-        <Route path="articles" element={<Articles />} loader={postsLoader} />
-        <Route path="articles/new" element={<NewPost />} action={newPostAction} />
+        <Route path="posts" element={<Posts />} loader={postsLoader} />
+        <Route path="posts/new" element={<NewPost />} action={newPostAction} />
         <Route
-          path="/articles/:id"
+          path="/posts/:id"
           element={<PostDetail />}
           loader={postDetailLoader}
         >

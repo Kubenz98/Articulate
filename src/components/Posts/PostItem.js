@@ -18,7 +18,7 @@ const Post = (props) => {
   }, [props.imageLink]);
 
   const link = () => {
-    navigate(`/articles/${props.id.toString()}`);
+    navigate(`/posts/${props.id.toString()}`);
   };
 
   const text = textTruncate(props.body, 50);

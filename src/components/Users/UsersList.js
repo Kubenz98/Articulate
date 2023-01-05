@@ -3,6 +3,7 @@ import useSearcher from "../../hooks/useSearcher";
 import Searcher from "../UI/Searcher";
 import ReactPaginate from "react-paginate";
 import usePaginate from "../../hooks/usePaginate";
+import { useLocation } from "react-router-dom";
 
 const UsersList = (props) => {
   const { users } = props;
@@ -11,9 +12,15 @@ const UsersList = (props) => {
     true
   );
 
-  const { currentItems, pageCount, handlePageClick } = usePaginate(
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const currentPage = queryParams.get("page");
+
+  const { currentItems, pageCount, handlePageClick, itemOffset } = usePaginate(
     filteredUsers,
-    21
+    21,
+    'usersList',
+    currentPage
   );
 
   if (filteredUsers.length === 0) {
@@ -60,6 +67,7 @@ const UsersList = (props) => {
         previousLinkClassName={"prevLink"}
         nextLinkClassName={"prevLink"}
         activeLinkClassName={"activeLink"}
+        forcePage={(itemOffset.page*1) - 1}
       />
     </>
   );

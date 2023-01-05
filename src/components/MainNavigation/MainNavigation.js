@@ -69,7 +69,7 @@ const MainNavigation = () => {
           )}
           <li>
             <NavLink
-              to="/articles"
+              to="/posts?page=1"
               className={(link) => (link.isActive ? classes.active : undefined)}
               onClick={closeNav}
             >
@@ -78,7 +78,7 @@ const MainNavigation = () => {
           </li>
           <li>
             <NavLink
-              to="/users"
+              to="/users?page=1"
               className={(link) => (link.isActive ? classes.active : undefined)}
               onClick={closeNav}
             >

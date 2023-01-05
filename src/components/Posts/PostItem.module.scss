@@ -11,6 +11,9 @@
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s;
+  @media (min-width: 700px) {
+    margin: 0 auto;
+  }
   &:hover {
     background-color: $postHover;
     transform: scale(1.02);
