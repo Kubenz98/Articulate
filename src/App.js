@@ -15,7 +15,7 @@ import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
 import NewPost, { action as newPostAction } from "./pages/NewPost";
 import AuthPage, { action as authAction } from "./pages/Authentication";
 import NotFound from "./pages/NotFound";
-import SignUpPage, { action as signUpAction } from "./pages/Signup";
+import SignUpPage, { action as signUpAction } from "./pages/SignUp";
 import Profile, { action as profileAction } from "./pages/Profile";
 
 

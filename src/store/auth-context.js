@@ -10,13 +10,13 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const [currentUser, setCurrentUser] = useState();
 
-  useEffect(() => {
+  useEffect(() => {    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
       } else setCurrentUser(null);
     });
-    return unsubscribe;
+    return  unsubscribe;
   }, []);
 
   const isLoggedIn = !!currentUser;

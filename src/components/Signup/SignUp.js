@@ -1,19 +1,7 @@
-import { useEffect } from "react";
-import { Form, useActionData, useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
+import { Form, useActionData} from "react-router-dom";
 
 const SignUp = (props) => {
   const error = useActionData();
-
-  const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && user) {
-      navigate("/");
-    }
-  }, [loading, navigate, user]);
 
   return (
     <>

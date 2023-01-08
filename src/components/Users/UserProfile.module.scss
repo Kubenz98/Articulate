@@ -21,8 +21,10 @@
     }
   }
   &__posts {
-    margin-top: 15px;
     padding-bottom: 50px;
+    &-title {
+      margin: 20px auto;
+    }
     & ul {
       & li {
         box-shadow: none;

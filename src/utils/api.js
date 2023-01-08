@@ -27,7 +27,7 @@ import {
 export const getPosts = async () => {
   const loadedPosts = [];
   const posts = await fetch(
-    "https://blog-development-33c46-default-rtdb.firebaseio.com/posts.json"
+    "https://articulate-project-default-rtdb.firebaseio.com/posts.json"
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load posts.");
@@ -50,7 +50,7 @@ export const getPosts = async () => {
 
 export const getPost = async (id) => {
   const data = await fetch(
-    `https://blog-development-33c46-default-rtdb.firebaseio.com/posts/${id}.json`
+    `https://articulate-project-default-rtdb.firebaseio.com/posts/${id}.json`
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load post.");
@@ -89,7 +89,7 @@ export const writePostComment = async (auth, body, postId) => {
 export const getPostComments = async (id) => {
   const loadedComments = [];
   const comments = await fetch(
-    `https://blog-development-33c46-default-rtdb.firebaseio.com/posts/${id}/comments.json`
+    `https://articulate-project-default-rtdb.firebaseio.com/posts/${id}/comments.json`
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load comments.");
@@ -111,7 +111,7 @@ export const getPostComments = async (id) => {
 
 export const getUser = async (id) => {
   const userData = await fetch(
-    `https://blog-development-33c46-default-rtdb.firebaseio.com/users/${id}.json`
+    `https://articulate-project-default-rtdb.firebaseio.com/users/${id}.json`
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load user.");
@@ -122,7 +122,7 @@ export const getUser = async (id) => {
   const loadedPosts = [];
 
   const userPosts = await fetch(
-    `https://blog-development-33c46-default-rtdb.firebaseio.com/user-posts/${id}.json`
+    `https://articulate-project-default-rtdb.firebaseio.com/user-posts/${id}.json`
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load user posts.");
@@ -144,7 +144,7 @@ export const getUser = async (id) => {
 export const getAllUsers = async () => {
   const loadedUsers = [];
   const users = await fetch(
-    "https://blog-development-33c46-default-rtdb.firebaseio.com/users.json"
+    "https://articulate-project-default-rtdb.firebaseio.com/users.json"
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Could not load users.");
@@ -236,13 +236,14 @@ export async function writeNewPost(auth, data) {
 
   let imageLink;
 
-  if (data.image) {
+  if (data.image.size > 0) {
     await uploadBytes(storageRef, data.image).then(async (snapshot) => {
       await getDownloadURL(snapshot.ref).then((url) => (imageLink = url));
     });
+  } else {
+    imageLink =
+      "https://firebasestorage.googleapis.com/v0/b/articulate-project.appspot.com/o/default_image.jpg?alt=media&token=97bc62fb-203e-4c1a-a036-1f3c67f2d3f0";
   }
-  imageLink =
-    "https://firebasestorage.googleapis.com/v0/b/blog-development-33c46.appspot.com/o/images%2Fdefault_image.jpg?alt=media&token=93bf92c1-8436-47cf-b453-1566162097ed";
   const db = getDatabase();
 
   const postData = {

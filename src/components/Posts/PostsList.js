@@ -37,6 +37,13 @@ const Posts = (props) => {
           onChange={inputChangeHandler}
           placeholder="search by title"
         />
+        {authCtx.isLoggedIn && (
+          <div className="link-container">
+            <Link to="new" className="button button--link">
+              Add Post
+            </Link>
+          </div>
+        )}
         <p className="error">There are no posts added yet.</p>
       </>
     );

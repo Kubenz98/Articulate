@@ -14,7 +14,6 @@ export default SignupPage;
 
 export async function action({ request }) {
   const data = await request.formData();
-
   const user = {
     email: data.get("email"),
     password: data.get("password"),
@@ -29,6 +28,6 @@ export async function action({ request }) {
     return formIsValid.error;
   }
   await signup(auth, user);
-
+  
   return redirect("/");
 }
