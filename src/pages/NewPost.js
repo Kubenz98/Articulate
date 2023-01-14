@@ -1,7 +1,7 @@
-import AddPost from "../components/Posts/NewPost";
+import NewPostForm from "../components/Posts/NewPostForm";
 import { redirect, useNavigate, useNavigation } from "react-router-dom";
 import { auth } from "../firebase";
-import { writeNewPost } from "../utils/api";
+import { writeNewPost } from "../api";
 import postValidation from "../helpers/newPostValidation";
 
 const NewPost = () => {
@@ -13,13 +13,10 @@ const NewPost = () => {
   };
 
   return (
-    <>
-      <h1>Add New Post</h1>
-      <AddPost
-        onCancel={cancel}
-        submitting={navigation.state === "submitting"}
-      />
-    </>
+    <NewPostForm
+      onCancel={cancel}
+      submitting={navigation.state === "submitting"}
+    />
   );
 };
 

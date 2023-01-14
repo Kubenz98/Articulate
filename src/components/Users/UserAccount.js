@@ -1,7 +1,7 @@
 import classes from "./UserProfile.module.scss";
 import PostsList from "../Posts/PostsList";
 
-const UserProfile = (props) => {
+const UserAccount = (props) => {
   return (
     <>
       <div className={classes.user}>
@@ -24,4 +24,4 @@ const UserProfile = (props) => {
   );
 };
 
-export default UserProfile;
+export default UserAccount;

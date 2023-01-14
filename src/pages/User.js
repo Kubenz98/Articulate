@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { getUser } from "../utils/api";
+import { getUser } from "../api";
 import { useLoaderData, defer, Await } from "react-router-dom";
-import UserProfile from "../components/Users/UserProfile";
+import UserAccount from "../components/Users/UserAccount";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const User = () => {
@@ -16,7 +16,7 @@ const User = () => {
             const postsCopy = [...loadedData.loadedPosts];
             postsCopy.reverse();
             return (
-              <UserProfile
+              <UserAccount
                 image={loadedData.userData.profile_picture}
                 username={loadedData.userData.username}
                 email={loadedData.userData.email}

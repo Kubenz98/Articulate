@@ -1,11 +1,11 @@
-import ProfileData from "../components/ProfileData/ProfileData";
-import { updateUserPassword } from "../utils/api";
+import ProfileSettings from "../components/ProfileSettings/ProfileSettings";
+import { updateUserPassword } from "../api";
 import { auth } from "../firebase";
 import { redirect } from "react-router-dom";
 import { passwordValidation, equalPasswords } from "../helpers/formValidation";
 
 const Profile = () => {
-  return <ProfileData />;
+  return <ProfileSettings />;
 };
 
 export default Profile;

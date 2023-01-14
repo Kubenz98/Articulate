@@ -1,5 +1,5 @@
-@import "./utils/scss/variables";
-@import "./utils/scss/mixins";
+@import "./scss/variables";
+@import "./scss/mixins";
 
 * {
   margin: 0;
@@ -118,6 +118,13 @@ h1 {
 .error-form {
   text-align: center;
   color: rgb(255, 58, 58);
+}
+
+.confirm-error {
+  padding: 10px;
+  background-color: rgb(231, 41, 41);
+  border-radius: 6px;
+  margin: 10px auto;
 }
 
 .input-error {

@@ -1,7 +1,7 @@
 import Authentication from "../components/Auth/Authentication";
 import formValidation from "../helpers/formValidation";
 import { redirect } from "react-router-dom";
-import { login } from "../utils/api";
+import { login } from "../api";
 import { auth } from "../firebase";
 
 const AuthPage = () => {

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getPosts } from "../utils/api";
+import { getPosts } from "../api";
 import PostsList from "../components/Posts/PostsList";
 import { useLoaderData, defer, Await } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";

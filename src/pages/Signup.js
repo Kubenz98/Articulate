@@ -2,7 +2,7 @@ import Signup from "../components/Signup/SignUp";
 import formValidation from "../helpers/formValidation";
 import { redirect, useNavigation } from "react-router-dom";
 import { auth } from "../firebase";
-import { signup } from "../utils/api";
+import { signup } from "../api";
 
 const SignupPage = () => {
   const navigation = useNavigation();
@@ -29,5 +29,5 @@ export async function action({ request }) {
   }
   await signup(auth, user);
   
-  return redirect("/");
+  return redirect("/confirm");
 }

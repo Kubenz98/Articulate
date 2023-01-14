@@ -5,7 +5,7 @@ import Burger from "../Burger/Burger";
 import classes from "./MainNavigation.module.scss";
 import AuthContext from "../../store/auth-context";
 import { auth } from "../../firebase";
-import { logout } from "../../utils/api";
+import { logout } from "../../api";
 
 const MainNavigation = () => {
   const [navActive, setNavActive] = useState(false);

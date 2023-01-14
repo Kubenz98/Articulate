@@ -8,7 +8,7 @@ const postValidation = (postData) => {
     error = "Add tag, please";
   }
   if (postData.image.size > 0) {
-    if (postData.image.size > 500000) {
+    if (postData.image.size > 524288) {
       error =
         "This image is too big. Please upload an image with maximum of size 500kb";
     } else if (

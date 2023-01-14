@@ -6,6 +6,7 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  sendEmailVerification,
 } from "firebase/auth";
 
 import {
@@ -180,7 +181,11 @@ export async function signup(auth, user) {
             ? "https://robohash.org/1"
             : "https://robohash.org/4",
       });
-    });
+    })
+    .then(async () => {
+      await sendEmailVerification(auth.currentUser);
+    })
+    .then(() => logout(auth));
 }
 
 export async function login(auth, email, password) {
