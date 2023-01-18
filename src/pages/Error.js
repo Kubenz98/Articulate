@@ -4,7 +4,6 @@ import MainNavigation from "../components/MainNavigation/MainNavigation";
 const ErrorPage = () => {
   const error = useRouteError();
   let message = "Something went wrong!";
-  console.log(error);
 
   if (error?.data?.code === "auth/wrong-password") {
     message = "Wrong password.";
@@ -21,6 +20,8 @@ const ErrorPage = () => {
   } else if (error?.data?.code === "auth/weak-password") {
     message = "Password must be at least six characters long.";
   } else if (error?.data?.code === "PERMISSION_DENIED") {
+    message = "Permission denied.";
+  } else if (error?.data?.code.startsWith("auth/requests-from-referer")) {
     message = "Permission denied.";
   }
 
