@@ -50,9 +50,11 @@ const NewPostForm = (props) => {
           <input
             id="image"
             name="image"
+            style={{paddingLeft: '0'}}
             type="file"
             accept="image/png, image/jpeg"
           />
+          <p style={{marginTop: '5px'}}>If you don't have an image, the default image will be set. Recommended 16:9 aspect ratio.</p>
         </div>
         {error && <p className="error-form">{error}</p>}
         <div className="form__actions">
