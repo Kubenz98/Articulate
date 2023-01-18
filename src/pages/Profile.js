@@ -1,14 +1,14 @@
-import ProfileSettings from "../components/ProfileSettings/ProfileSettings";
+import Profile from "../components/Profile/Profile";
 import { updateUserPassword } from "../api";
 import { auth } from "../firebase";
 import { redirect } from "react-router-dom";
 import { passwordValidation, equalPasswords } from "../helpers/formValidation";
 
-const Profile = () => {
-  return <ProfileSettings />;
+const ProfilePage = () => {
+  return <Profile />;
 };
 
-export default Profile;
+export default ProfilePage;
 
 export async function action({ request }) {
 

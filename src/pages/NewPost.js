@@ -4,14 +4,14 @@ import { auth } from "../firebase";
 import { writeNewPost } from "../api";
 import postValidation from "../helpers/newPostValidation";
 
-const NewPost = () => {
+const NewPostPage = () => {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
   const cancel = () => {
     navigate(-1);
   };
-
+  
   return (
     <NewPostForm
       onCancel={cancel}
@@ -20,7 +20,7 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default NewPostPage;
 
 export async function action({ request }) {
   const data = await request.formData();

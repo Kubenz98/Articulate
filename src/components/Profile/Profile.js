@@ -4,7 +4,7 @@ import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-const ProfileSettings = () => {
+const Profile = () => {
   const error = useActionData();
 
   const [user, loading] = useAuthState(auth);
@@ -45,4 +45,4 @@ const ProfileSettings = () => {
   );
 };
 
-export default ProfileSettings;
+export default Profile;

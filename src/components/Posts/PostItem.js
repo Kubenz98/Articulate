@@ -1,13 +1,13 @@
 import React from "react";
 import classes from "./PostItem.module.scss";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import textTruncate from "../../helpers/textTruncate";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const Post = (props) => {
   const [image, setImage] = useState(null);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (props.imageLink) {
@@ -17,15 +17,11 @@ const Post = (props) => {
     }
   }, [props.imageLink]);
 
-  const link = () => {
-    navigate(`/posts/${props.id.toString()}`);
-  };
-
   const text = textTruncate(props.body, 50);
-  
+
   return image || !props.imageLink ? (
-    <li className={classes["list-item"]} onClick={link}>
-      <div className={classes.post}>
+    <li className={classes["list-item"]}>
+      <Link to={`/posts/${props.id.toString()}`} className={classes.post}>
         <p className={classes["post__tags"]}>{props.tags}</p>
         {props.imageLink && (
           <div className={classes["post__image"]}>
@@ -34,7 +30,7 @@ const Post = (props) => {
         )}
         <h3 className={classes["post__title"]}>{props.title}</h3>
         <p className={classes["post__text"]}>{text}</p>
-      </div>
+      </Link>
     </li>
   ) : (
     <LoadingSpinner />

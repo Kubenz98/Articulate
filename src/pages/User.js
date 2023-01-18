@@ -4,7 +4,7 @@ import { useLoaderData, defer, Await } from "react-router-dom";
 import UserAccount from "../components/Users/UserAccount";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
-const User = () => {
+const UserPage = () => {
   const loaderData = useLoaderData();
 
   return (
@@ -30,7 +30,7 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserPage;
 
 export function loader({ params }) {
   const { id } = params;

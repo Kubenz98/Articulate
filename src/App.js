@@ -1,54 +1,63 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-  Route,
-} from "react-router-dom";
-import PostDetail, { loader as postDetailLoader } from "./pages/PostDetail";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PostDetailPage, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./pages/RootLayout";
-import Posts, { loader as postsLoader } from "./pages/Posts";
-import Welcome from "./pages/Welcome";
-import Comments, { loader as commentsLoader, action as commentAction } from "./pages/Comments";
+import PostsPage, { loader as postsLoader } from "./pages/Posts";
+import WelcomePage from "./pages/Welcome";
+import Comments, {
+  loader as commentsLoader,
+  action as commentAction,
+} from "./pages/Comments";
 import Error from "./pages/Error";
-import User, { loader as userLoader } from "./pages/User";
-import AllUsers, { loader as allUsersLoader } from "./pages/AllUsers";
-import NewPost, { action as newPostAction } from "./pages/NewPost";
+import UserPage, { loader as userLoader } from "./pages/User";
+import AllUsersPage, { loader as allUsersLoader } from "./pages/AllUsers";
+import NewPostPage, { action as newPostAction } from "./pages/NewPost";
 import AuthPage, { action as authAction } from "./pages/Authentication";
-import NotFound from "./pages/NotFound";
+import NotFoundPage from "./pages/NotFound";
 import SignUpPage, { action as signUpAction } from "./pages/SignUp";
-import Profile, { action as profileAction } from "./pages/Profile";
+import ProfilePage, { action as profileAction } from "./pages/Profile";
 import ConfirmEmail from "./pages/ConfirmEmail";
 
-
 function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={<RootLayout />} errorElement={<Error />}>
-        <Route index element={<Welcome />} />
-        <Route path="login" element={<AuthPage />} action={authAction} errorElement={<Error />}/>
-        <Route path="signup" element={<SignUpPage />} action={signUpAction} />
-        <Route path="confirm" element={<ConfirmEmail />} />
-        <Route path="profile" element={<Profile />} action={profileAction} />
-        <Route path="posts" element={<Posts />} loader={postsLoader} />
-        <Route path="posts/new" element={<NewPost />} action={newPostAction} />
-        <Route
-          path="/posts/:id"
-          element={<PostDetail />}
-          loader={postDetailLoader}
-        >
-          <Route
-            path="comments"
-            element={<Comments />}
-            loader={commentsLoader}
-            action={commentAction}
-          />
-        </Route>
-        <Route path="users" element={<AllUsers />} loader={allUsersLoader} />
-        <Route path="users/:id" element={<User />} loader={userLoader} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    )
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      errorElement: <Error />,
+      children: [
+        { index: true, element: <WelcomePage /> },
+        { path: "login", element: <AuthPage />, action: authAction },
+        { path: "signup", element: <SignUpPage />, action: signUpAction },
+        { path: "confirm", element: <ConfirmEmail /> },
+        { path: "profile", element: <ProfilePage />, action: profileAction },
+        {
+          path: "posts",
+          element: <PostsPage />,
+          loader: postsLoader,
+        },
+        { path: "posts/new", element: <NewPostPage />, action: newPostAction },
+        {
+          path: "posts/:id",
+          element: <PostDetailPage />,
+          loader: postDetailLoader,
+          children: [
+            {
+              path: "comments",
+              element: <Comments />,
+              loader: commentsLoader,
+              action: commentAction,
+            },
+          ],
+        },
+        {
+          path: "users",
+          element: <AllUsersPage />,
+          loader: allUsersLoader,
+        },
+        { path: "users/:id", element: <UserPage />, loader: userLoader },
+        { path: "*", element: <NotFoundPage /> },
+      ],
+    },
+  ]);
   return <RouterProvider router={router} />;
 }
 

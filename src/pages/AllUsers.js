@@ -5,7 +5,7 @@ import { defer, Await } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
-const AllUsers = () => {
+const AllUsersPage = () => {
   const data = useLoaderData();
 
   return (
@@ -17,7 +17,7 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default AllUsersPage;
 
 export async function loader() {
   return defer({ users: getAllUsers() });

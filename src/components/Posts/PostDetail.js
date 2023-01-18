@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import classes from "./PostDetail.module.scss";
 
-const BlogPostDetail = (props) => {
+const PostDetail = (props) => {
   const [showComments, setShowComments] = useState(false);
   const [image, setImage] = useState('');
 
@@ -67,4 +67,4 @@ const BlogPostDetail = (props) => {
   );
 };
 
-export default BlogPostDetail;
+export default PostDetail;
