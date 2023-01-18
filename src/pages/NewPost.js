@@ -1,5 +1,5 @@
 import NewPostForm from "../components/Posts/NewPostForm";
-import { redirect, useNavigate, useNavigation } from "react-router-dom";
+import { json, redirect, useNavigate, useNavigation } from "react-router-dom";
 import { auth } from "../firebase";
 import { writeNewPost } from "../api";
 import postValidation from "../helpers/newPostValidation";
@@ -38,7 +38,12 @@ export async function action({ request }) {
     return postIsInvalid;
   }
 
-  await writeNewPost(auth, postData);
+  try{
+    await writeNewPost(auth, postData);
+  }
+  catch(err) {
+    throw json({code: err.code})
+  }
 
   return redirect("/posts?page=1");
 }

@@ -1,6 +1,6 @@
 import Signup from "../components/Signup/SignUp";
 import formValidation from "../helpers/formValidation";
-import { redirect, useNavigation } from "react-router-dom";
+import { redirect, useNavigation, json } from "react-router-dom";
 import { auth } from "../firebase";
 import { signup } from "../api";
 
@@ -27,7 +27,12 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-  await signup(auth, user);
+  try {
+    await signup(auth, user);
+  }
+  catch (err) {
+    throw json({ code: err.code });
+  }
   
   return redirect("/confirm");
 }

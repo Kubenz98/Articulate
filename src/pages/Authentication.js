@@ -1,6 +1,6 @@
 import Authentication from "../components/Auth/Authentication";
 import formValidation from "../helpers/formValidation";
-import { redirect } from "react-router-dom";
+import { json, redirect } from "react-router-dom";
 import { login } from "../api";
 import { auth } from "../firebase";
 
@@ -22,7 +22,11 @@ export async function action({ request }) {
   if (formIsValid.error) {
     return formIsValid.error;
   }
-   await login(auth, user.email, user.password);
+  try {
+    await login(auth, user.email, user.password);
+  } catch (err) {
+    throw json({ code: err.code });
+  }
 
   return redirect("/");
 }

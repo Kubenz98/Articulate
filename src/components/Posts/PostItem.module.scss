@@ -38,7 +38,8 @@
     }
     &__image {
       & img {
-        width: 100%;
+        max-width: 100%;
+        height: auto;
       }
     }
     &__title {
