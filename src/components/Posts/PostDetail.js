@@ -5,9 +5,15 @@ import classes from "./PostDetail.module.scss";
 
 const PostDetail = (props) => {
   const [showComments, setShowComments] = useState(false);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
   const { postData } = props;
+
+  let date;
+
+  if (postData.date) {
+    date = new Date(postData.date);
+  }
 
   useEffect(() => {
     if (!postData.imageLink) return;
@@ -53,13 +59,13 @@ const PostDetail = (props) => {
         </div>
       )}
       <pre className={classes["post__text"]}>{postData.body}</pre>
-      <Link
-        to={`/users/${userId}`}
-        relative="route"
-        className={classes["post__author"]}
-      >
-        author: <strong>{postData.user}</strong>
-      </Link>
+      <span className={classes["post__author"]}>
+        author:{" "}
+        <Link to={`/users/${userId}`} relative="route">
+          {postData.user}
+        </Link>
+        {date !== undefined ? date.toLocaleDateString() : null}
+      </span>
       {button}
     </div>
   ) : (

@@ -11,7 +11,7 @@ const NewPostPage = () => {
   const cancel = () => {
     navigate(-1);
   };
-  
+
   return (
     <NewPostForm
       onCancel={cancel}
@@ -30,6 +30,7 @@ export async function action({ request }) {
     tags: data.get("tags"),
     body: data.get("text"),
     image: data.get("image"),
+    date: Date.now(),
   };
 
   const postIsInvalid = postValidation(postData);
@@ -37,13 +38,10 @@ export async function action({ request }) {
   if (postIsInvalid) {
     return postIsInvalid;
   }
-
-  try{
+  try {
     await writeNewPost(auth, postData);
+  } catch (err) {
+    throw json({ code: err.code });
   }
-  catch(err) {
-    throw json({code: err.code})
-  }
-
   return redirect("/posts?page=1");
 }

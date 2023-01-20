@@ -41,8 +41,6 @@ export const getPosts = async () => {
       title: posts[post].title,
       tags: posts[post].tags,
       body: posts[post].body,
-      uid: posts[post].uid,
-      userName: posts[post].user,
       imageLink: posts[post].imageLink ? posts[post].imageLink : "",
     });
   }
@@ -255,6 +253,7 @@ export async function writeNewPost(auth, data) {
     title: data.title,
     tags: data.tags,
     body: data.body,
+    date: data.date,
     user: auth.currentUser.displayName,
     uid: auth.currentUser.uid,
     imageLink,

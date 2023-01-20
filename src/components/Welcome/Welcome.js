@@ -8,7 +8,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const Welcome = () => {
   const authCtx = useContext(AuthContext);
-  const [user, loading, error] = useAuthState(auth);
+  const loading = useAuthState(auth)[1];
   
   if (loading) return <LoadingSpinner />;
   

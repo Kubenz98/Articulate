@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .post {
   padding: 10px 0;
@@ -17,7 +17,7 @@
     max-width: 100%;
     margin: 0 auto 10px;
     & img {
-     width: 100%;
+      width: 100%;
     }
   }
   &__text {
@@ -34,9 +34,12 @@
     text-decoration: none;
     color: white;
     cursor: pointer;
-    & strong {
-      padding: 5px;
+    & a {
+      margin-right: 5px;
+      padding: 3px;
       border-radius: 5px;
+      text-decoration: none;
+      color: white;
       background-color: #555;
       font-weight: 500;
       &:hover {
