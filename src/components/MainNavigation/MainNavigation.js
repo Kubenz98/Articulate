@@ -6,10 +6,11 @@ import classes from "./MainNavigation.module.scss";
 import AuthContext from "../../store/auth-context";
 import { auth } from "../../firebase";
 import { logout } from "../../api";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const MainNavigation = () => {
   const [navActive, setNavActive] = useState(false);
-
+  const loading = useAuthState(auth)[1];
   const authCtx = useContext(AuthContext);
 
   const navHandler = () => {
@@ -34,6 +35,8 @@ const MainNavigation = () => {
   let navClassVert = navActive
     ? `${classes.nav} ${classes["nav--active"]}`
     : classes.nav;
+
+  if (loading) return;
 
   return (
     <header className={classes.header}>

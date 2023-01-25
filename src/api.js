@@ -16,57 +16,46 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-import {
-  getDatabase,
-  ref as dbRef,
-  set,
-  child,
-  push,
-  update,
-} from "firebase/database";
+import { ref as dbRef, get, child, push, update } from "firebase/database";
+import { db } from "./firebase";
 
 export const getPosts = async () => {
   const loadedPosts = [];
-  const posts = await fetch(
-    "https://articulate-project-default-rtdb.firebaseio.com/posts.json"
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load posts.");
-    }
-    return response.json();
-  });
-  for (const post in posts) {
-    loadedPosts.push({
-      id: post,
-      title: posts[post].title,
-      tags: posts[post].tags,
-      body: posts[post].body,
-      imageLink: posts[post].imageLink ? posts[post].imageLink : "",
+  await get(child(dbRef(db), `posts`))
+    .then((data) => {
+      const posts = data.val();
+      for (const post in posts) {
+        loadedPosts.push({
+          id: post,
+          title: posts[post].title,
+          tags: posts[post].tags,
+          body: posts[post].body,
+          imageLink: posts[post].imageLink ? posts[post].imageLink : "",
+        });
+      }
+    })
+    .catch((err) => {
+      throw new Error("postsError");
     });
-  }
   return loadedPosts;
 };
 
 export const getPost = async (id) => {
-  const data = await fetch(
-    `https://articulate-project-default-rtdb.firebaseio.com/posts/${id}.json`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load post.");
-    }
-    return response.json();
-  });
-
+  let data;
+  await get(child(dbRef(db), `posts/${id}`))
+    .then((post) => {
+      data = post.val();
+    })
+    .catch((err) => {
+      throw new Error("postError");
+    });
   return data;
 };
 
-export const writePostComment = async (auth, body, postId) => {
+export const writePostComment = (auth, body, postId) => {
   if (!auth || !auth.currentUser) {
-    throw new Error("Sign in to add new comment!");
+    throw new Error("commentLogin");
   }
-
-  const db = getDatabase();
-
   const commentData = {
     body,
     user: auth.currentUser.displayName,
@@ -87,77 +76,73 @@ export const writePostComment = async (auth, body, postId) => {
 
 export const getPostComments = async (id) => {
   const loadedComments = [];
-  const comments = await fetch(
-    `https://articulate-project-default-rtdb.firebaseio.com/posts/${id}/comments.json`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load comments.");
-    }
-    return response.json();
-  });
-
-  for (const comment in comments) {
-    loadedComments.push({
-      id: comment,
-      body: comments[comment].body,
-      uid: comments[comment].uid,
-      username: comments[comment].user,
+  await get(child(dbRef(db), `posts/${id}/comments`))
+    .then((data) => {
+      const comments = data.val();
+      for (const comment in comments) {
+        loadedComments.push({
+          id: comment,
+          body: comments[comment].body,
+          uid: comments[comment].uid,
+          username: comments[comment].user,
+        });
+      }
+    })
+    .catch((err) => {
+      throw new Error("getComments");
     });
-  }
 
   return loadedComments;
 };
 
 export const getUser = async (id) => {
-  const userData = await fetch(
-    `https://articulate-project-default-rtdb.firebaseio.com/users/${id}.json`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load user.");
-    }
-    return response.json();
-  });
+  let userData;
+  await get(child(dbRef(db), `users/${id}`))
+    .then((post) => {
+      userData = post.val();
+    })
+    .catch((err) => {
+      throw new Error("getUser");
+    });
 
   const loadedPosts = [];
 
-  const userPosts = await fetch(
-    `https://articulate-project-default-rtdb.firebaseio.com/user-posts/${id}.json`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load user posts.");
-    }
-    return response.json();
-  });
-  for (const post in userPosts) {
-    loadedPosts.push({
-      id: post,
-      title: userPosts[post].title,
-      tags: userPosts[post].tags,
-      body: userPosts[post].body,
-      imageLink: userPosts[post].imageLink,
+  await get(child(dbRef(db), `user-posts/${id}`))
+    .then((data) => {
+      const posts = data.val();
+      for (const post in posts) {
+        loadedPosts.push({
+          id: post,
+          title: posts[post].title,
+          tags: posts[post].tags,
+          body: posts[post].body,
+          imageLink: posts[post].imageLink ? posts[post].imageLink : "",
+        });
+      }
+    })
+    .catch((err) => {
+      throw new Error("userPostsError");
     });
-  }
   return { userData, loadedPosts };
 };
 
 export const getAllUsers = async () => {
   const loadedUsers = [];
-  const users = await fetch(
-    "https://articulate-project-default-rtdb.firebaseio.com/users.json"
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not load users.");
-    }
-    return response.json();
-  });
-  for (const user in users) {
-    loadedUsers.push({
-      userId: users[user].userId,
-      username: users[user].username,
-      email: users[user].email,
-      image: users[user].profile_picture,
+  await get(child(dbRef(db), `users`))
+    .then((data) => {
+      const users = data.val();
+      for (const user in users) {
+        loadedUsers.push({
+          userId: users[user].userId,
+          username: users[user].username,
+          email: users[user].email,
+          image: users[user].profile_picture,
+        });
+      }
+    })
+    .catch((err) => {
+      throw new Error("usersError");
     });
-  }
   return loadedUsers;
 };
 
@@ -196,7 +181,6 @@ export function logout(auth) {
 
 export async function updateUser(auth, data) {
   await updateProfile(auth.currentUser, {
-    displayName: data.nick,
     photoURL:
       data.gender === "male"
         ? "https://robohash.org/1"
@@ -218,16 +202,28 @@ export async function updateUserPassword(user, newPassword, oldPassword) {
   updatePassword(user, newPassword);
 }
 
-async function writeUserData(userId, email, name, gender) {
-  const db = getDatabase();
+async function writeUserData(userId, email, username, gender) {
+  const usernamesUpdate = {};
+  usernamesUpdate["/usernames/" + username.toLowerCase()] = userId;
 
-  set(dbRef(db, "users/" + userId), {
+  await update(dbRef(db), usernamesUpdate);
+
+  const userUpdate = {};
+
+  userUpdate["/users/" + userId + "/username"] = username;
+
+  await update(dbRef(db), userUpdate);
+
+  const userDataUpdate = {};
+  userDataUpdate["/users/" + userId] = {
     userId,
-    username: name,
-    email: email,
+    username,
+    email,
     profile_picture:
       gender === "male" ? "https://robohash.org/1" : "https://robohash.org/4",
-  });
+  };
+
+  return update(dbRef(db), userDataUpdate);
 }
 
 export async function writeNewPost(auth, data) {
@@ -247,7 +243,6 @@ export async function writeNewPost(auth, data) {
     imageLink =
       "https://firebasestorage.googleapis.com/v0/b/articulate-project.appspot.com/o/default_image.jpg?alt=media&token=97bc62fb-203e-4c1a-a036-1f3c67f2d3f0";
   }
-  const db = getDatabase();
 
   const postData = {
     title: data.title,

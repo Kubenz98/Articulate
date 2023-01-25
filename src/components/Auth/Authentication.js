@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
-const Authentication = () => {
+const Authentication = (props) => {
   const [user, loading] = useAuthState(auth);
   const [error, setError] = useState(null);
   const action = useActionData();
@@ -38,7 +38,9 @@ const Authentication = () => {
         </div>
         {error && <p className="error-form">{error}</p>}
         <div className="form__actions" style={{ marginTop: "40px" }}>
-          <button className="button button--link">Login</button>
+          <button className="button button--link" disabled={props.submitting}>
+            {props.submitting ? "Submitting..." : "Login"}
+          </button>
         </div>
       </Form>
     </>

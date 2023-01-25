@@ -3,6 +3,8 @@ import formValidation from "../helpers/formValidation";
 import { redirect, useNavigation, json } from "react-router-dom";
 import { auth } from "../firebase";
 import { signup } from "../api";
+import { get, child, ref as dbRef } from "firebase/database";
+import { db } from "../firebase";
 
 const SignupPage = () => {
   const navigation = useNavigation();
@@ -21,18 +23,26 @@ export async function action({ request }) {
     nick: data.get("nick"),
     gender: data.get("gender"),
   };
+  let usernames;
+  try {
+    await get(child(dbRef(db), `usernames`)).then((response) => {
+      const data = response.val();
+      usernames = Object.keys(data);
+    });
+  } catch (err) {
+    throw json({ code: err.code ? err.code : err.message });
+  }
 
-  const formIsValid = formValidation(user, false);
+  const formIsValid = formValidation(user, false, usernames);
 
   if (formIsValid.error) {
     return formIsValid.error;
   }
   try {
     await signup(auth, user);
-  }
-  catch (err) {
+  } catch (err) {
     throw json({ code: err.code });
   }
-  
+
   return redirect("/confirm");
 }

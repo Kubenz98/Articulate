@@ -1,7 +1,10 @@
-import { Form, useActionData} from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
+import useSignupValidation from "../../hooks/useSignupValidation";
+import classes from "./SignUp.module.scss";
 
 const SignUp = (props) => {
   const error = useActionData();
+  const { username, usernameHandler } = useSignupValidation();
 
   return (
     <>
@@ -13,7 +16,22 @@ const SignUp = (props) => {
         </div>
         <div className="form__controls">
           <label htmlFor="nick">Nickname</label>
-          <input id="nick" name="nick" type="text" required />
+          <input
+            id="nick"
+            name="nick"
+            type="text"
+            onChange={usernameHandler}
+            maxLength={15}
+            required
+          />
+          {username.name && !username.exists && (
+            <p className={classes.valid}>nick {username.name} is available</p>
+          )}
+          {username.name && username.exists && (
+            <p className={classes.invalid}>
+              nick {username.name} is not available
+            </p>
+          )}
         </div>
         <div className="form__controls">
           <label htmlFor="gender">Gender</label>
@@ -33,7 +51,10 @@ const SignUp = (props) => {
         </div>
         {error && <p className="error-form">{error}</p>}
         <div className="form__actions">
-          <button className="button button--link" disabled={props.submitting}>
+          <button
+            className="button button--link"
+            disabled={props.submitting || username.exists || !username.name}
+          >
             {props.submitting ? "Submitting..." : "Sign up"}
           </button>
         </div>

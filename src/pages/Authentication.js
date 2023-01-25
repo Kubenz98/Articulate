@@ -3,9 +3,11 @@ import formValidation from "../helpers/formValidation";
 import { json, redirect } from "react-router-dom";
 import { login } from "../api";
 import { auth } from "../firebase";
+import { useNavigation } from "react-router-dom";
 
 const AuthPage = () => {
-  return <Authentication />;
+  const navigation = useNavigation();
+  return <Authentication submitting={navigation.state === "submitting"} />;
 };
 
 export default AuthPage;
