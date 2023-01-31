@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet, useLoaderData, defer, Await } from "react-router-dom";
 import PostDetail from "../components/Posts/PostDetail";
-import { getPost } from "../api";
+import { getPost } from "../api/postsApi";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const PostDetailPage = () => {

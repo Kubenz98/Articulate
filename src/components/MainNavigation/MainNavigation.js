@@ -5,7 +5,7 @@ import Burger from "../Burger/Burger";
 import classes from "./MainNavigation.module.scss";
 import AuthContext from "../../store/auth-context";
 import { auth } from "../../firebase";
-import { logout } from "../../api";
+import { logout } from "../../api/authApi";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const MainNavigation = () => {

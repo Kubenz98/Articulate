@@ -1,5 +1,5 @@
 import UsersList from "../components/Users/UsersList";
-import { getAllUsers } from "../api";
+import { getAllUsers } from "../api/usersApi";
 import { Suspense } from "react";
 import { defer, Await } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";

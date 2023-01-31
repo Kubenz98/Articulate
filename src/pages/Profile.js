@@ -1,5 +1,5 @@
 import Profile from "../components/Profile/Profile";
-import { updateUserPassword } from "../api";
+import { updateUserPassword } from "../api/authApi";
 import { auth } from "../firebase";
 import { redirect } from "react-router-dom";
 import { passwordValidation, equalPasswords } from "../helpers/formValidation";

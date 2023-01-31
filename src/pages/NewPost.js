@@ -1,7 +1,7 @@
 import NewPostForm from "../components/Posts/NewPostForm";
 import { json, redirect, useNavigate, useNavigation } from "react-router-dom";
 import { auth } from "../firebase";
-import { writeNewPost } from "../api";
+import { writeNewPost } from "../api/postsApi";
 import postValidation from "../helpers/newPostValidation";
 
 const NewPostPage = () => {

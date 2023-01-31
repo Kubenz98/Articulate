@@ -1,7 +1,7 @@
 import Authentication from "../components/Auth/Authentication";
 import formValidation from "../helpers/formValidation";
 import { json, redirect } from "react-router-dom";
-import { login } from "../api";
+import { login } from "../api/authApi";
 import { auth } from "../firebase";
 import { useNavigation } from "react-router-dom";
 

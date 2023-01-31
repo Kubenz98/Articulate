@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getUser } from "../api";
+import { getUser } from "../api/usersApi";
 import { useLoaderData, defer, Await } from "react-router-dom";
 import UserAccount from "../components/Users/UserAccount";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";

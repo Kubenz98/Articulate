@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { useLoaderData, defer, Await, useNavigation } from "react-router-dom";
 import Comments from "../components/Comments/CommentsList";
-import { getPostComments, writePostComment } from "../api";
+import { getPostComments, writePostComment } from "../api/commentsApi";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { auth } from "../firebase";
 

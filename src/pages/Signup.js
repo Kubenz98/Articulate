@@ -2,7 +2,7 @@ import Signup from "../components/Signup/SignUp";
 import formValidation from "../helpers/formValidation";
 import { redirect, useNavigation, json } from "react-router-dom";
 import { auth } from "../firebase";
-import { signup } from "../api";
+import { signup } from "../api/authApi";
 import { get, child, ref as dbRef } from "firebase/database";
 import { db } from "../firebase";
 
