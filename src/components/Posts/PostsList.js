@@ -6,6 +6,7 @@ import usePaginate from "../../hooks/usePaginate";
 import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context.js";
+import classes from "./PostsList.module.scss";
 
 const Posts = (props) => {
   const posts = props.data;
@@ -16,6 +17,19 @@ const Posts = (props) => {
 
   const queryParams = new URLSearchParams(location.search);
   const currentPage = queryParams.get("page");
+
+  let postSectionNavigation = (
+    <Link to="/posts/queue?page=1" className="link">
+      Posts Queue <span>→</span>
+    </Link>
+  );
+  if (location.pathname === "/posts/queue") {
+    postSectionNavigation = (
+      <Link to="/posts?page=1" className="link">
+        Main Posts <span>→</span>
+      </Link>
+    );
+  }
 
   const { currentItems, pageCount, handlePageClick, itemOffset } = usePaginate(
     filteredPosts,
@@ -33,16 +47,19 @@ const Posts = (props) => {
     return (
       <>
         <Searcher
-          title="All Posts"
+          path={location.pathname}
           onChange={inputChangeHandler}
           placeholder="search by title"
         />
-        {authCtx.isLoggedIn && (
-          <div className="link-container">
-            <Link to="new" className="button button--link">
+        {authCtx.isLoggedIn ? (
+          <div className={classes.buttons}>
+            {postSectionNavigation}
+            <Link to="/posts/new" className="button button--link">
               Add Post
             </Link>
           </div>
+        ) : (
+          <div className={classes.button}>{postSectionNavigation}</div>
         )}
         <p className="error">There are no posts added yet.</p>
       </>
@@ -53,39 +70,34 @@ const Posts = (props) => {
     <ul className="list">
       {posts.map((post) => (
         <Post
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          tags={post.tags}
-          body={post.body}
-          imageLink={post.imageLink}
+        key={post.id}
+        {...post}
         />
       ))}
     </ul>
   ) : (
     <>
       <Searcher
-        title="All Posts"
+        path={location.pathname}
         onChange={inputChangeHandler}
         placeholder="search by title"
       />
-      {authCtx.isLoggedIn && (
-        <div className="link-container">
-          <Link to="new" className="button button--link">
+      {authCtx.isLoggedIn ? (
+        <div className={classes.buttons}>
+          {postSectionNavigation}
+          <Link to="/posts/new" className="button button--link">
             Add Post
           </Link>
         </div>
+      ) : (
+        <div className={classes.button}>{postSectionNavigation}</div>
       )}
       {
         <ul className="list">
           {currentItems.map((post) => (
             <Post
               key={post.id}
-              id={post.id}
-              title={post.title}
-              tags={post.tags}
-              body={post.body}
-              imageLink={post.imageLink}
+              {...post}
             />
           ))}
         </ul>

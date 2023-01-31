@@ -13,16 +13,16 @@ const Comments = (props) => {
     commentRef.current.value = "";
     setError(null)
   };
-
+ 
   useEffect(() => {
     if (typeof action === "boolean") {
       cleanComment();
     } else setError(action);
   }, [action]);
-
+  
   return (
     <div>
-      <Form className="form" method="post" style={{ marginBottom: "30px" }}>
+      {<Form className="form" method="post" style={{ marginBottom: "30px" }}>
         <div className="form__controls">
           <textarea
             id="comment"
@@ -30,8 +30,9 @@ const Comments = (props) => {
             rows={3}
             required
             minLength={3}
-            placeholder="write a comment here"
+            placeholder={props.auth.currentUser ? "write a comment here" : "sign in to write comments"}
             ref={commentRef}
+            disabled={props.auth.currentUser === null}
           />
         </div>
         {error && <p className="error-form">{error}</p>}
@@ -39,12 +40,12 @@ const Comments = (props) => {
           <button
             type="submit"
             className="button button--link"
-            disabled={props.submitting}
+            disabled={props.submitting || !props.auth.currentUser}
           >
             {props.submitting ? "Submitting..." : "Add Comment"}
           </button>
         </div>
-      </Form>
+      </Form>}
       <ul>
         {comments.length > 0 ? (
           comments.map((comment) => (
@@ -53,6 +54,7 @@ const Comments = (props) => {
               userName={comment.username}
               userId={comment.uid}
               comment={comment.body}
+              date={comment.date}
             />
           ))
         ) : (

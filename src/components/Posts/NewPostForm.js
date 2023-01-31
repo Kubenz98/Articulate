@@ -39,7 +39,7 @@ const NewPostForm = (props) => {
         </div>
         <div className="form__controls">
           <label htmlFor="tags">Tags (separated by commas)</label>
-          <input id="tags" name="tags" required />
+          <input id="tags" name="tags" required maxLength={25} />
         </div>
         <div className="form__controls">
           <label htmlFor="text">Text</label>
@@ -68,7 +68,7 @@ const NewPostForm = (props) => {
           <button
             type="submit"
             className="button button--link"
-            disabled={props.submitting}
+            disabled={!user.emailVerified || props.submitting}
           >
             {props.submitting ? "Submitting..." : "Add Post"}
           </button>

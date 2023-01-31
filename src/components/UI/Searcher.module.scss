@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   @media (min-width: 700px) {
     flex-direction: row;
     justify-content: space-between;
@@ -16,7 +16,7 @@
 }
 
 .searcher {
-  margin: 10px 0 10px;
+  margin: 10px 0 0;
   padding: 3px;
   font-size: 20px;
   border-radius: $inputRadius;

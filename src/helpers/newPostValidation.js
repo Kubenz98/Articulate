@@ -1,11 +1,14 @@
 const postValidation = (postData) => {
   let error;
+
   if (postData.title.trim().length < 3) {
     error = "Title is too short";
   } else if (postData.body.trim().length < 10) {
     error = "Not enough post content";
   } else if (postData.tags.trim().length === 0) {
-    error = "Add tag, please";
+    error = "Add a tag, please";
+  } else if (postData.tags.trim().length > 25) {
+    error = "tags are too long"
   }
   if (postData.image.size > 0) {
     if (postData.image.size > 524288) {
@@ -18,7 +21,7 @@ const postValidation = (postData) => {
       error =
         "Wrong type of image. Please upload an image in .png or .jpg format";
     }
-  } else return
+  }
   return error;
 };
 

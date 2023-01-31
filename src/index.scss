@@ -39,16 +39,8 @@ h1 {
   text-align: center;
 }
 
-.link-container {
-  text-align: left;
-  margin-bottom: 30px;
-  @media (min-width: 700px) {
-    text-align: right;
-  }
-}
-
 .button {
-  padding: 8px 15px;
+  padding: 6px 15px;
   font-size: 20px;
   color: white;
   text-decoration: none;
@@ -84,6 +76,12 @@ h1 {
     & input,
     & textarea {
       @include input;
+      &:disabled {
+        pointer-events: none;
+        &::placeholder {
+          color: rgb(182, 182, 182);
+        }
+      }
     }
   }
   &__actions {
@@ -165,6 +163,13 @@ h1 {
   font-size: 20px;
   color: white;
   text-underline-offset: 8px;
+  transition: color 0.2s, text-underline-offset 0.2s;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: $mainColor;
+      text-underline-offset: 10px;
+    }
+  }
 }
 
 .pageLink {

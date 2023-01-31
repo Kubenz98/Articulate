@@ -49,6 +49,10 @@
       flex-direction: column;
       height: 100%;
       background-color: $navColor;
+      box-shadow: $navBoxShadow;
+      @media (min-width: 700px) {
+        box-shadow: none;
+      }
       & li {
         padding: 20px;
         text-align: center;

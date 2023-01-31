@@ -3,8 +3,7 @@ import { getPosts } from "../api";
 import PostsList from "../components/Posts/PostsList";
 import { useLoaderData, defer, Await } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-
-const PostsPage = () => {
+const PostQueuePage = () => {
   const data = useLoaderData();
   return (
     <>
@@ -21,8 +20,8 @@ const PostsPage = () => {
   );
 };
 
-export default PostsPage;
+export default PostQueuePage;
 
 export async function loader() {
-  return defer({ posts: getPosts("main") });
+  return defer({ posts: getPosts("queue") });
 }

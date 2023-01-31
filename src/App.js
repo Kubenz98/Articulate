@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import PostDetailPage, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./pages/RootLayout";
 import PostsPage, { loader as postsLoader } from "./pages/Posts";
+import PostQueuePage, { loader as postsQueueLoader } from "./pages/PostsQueue";
 import WelcomePage from "./pages/Welcome";
 import Comments, {
   loader as commentsLoader,
@@ -34,6 +36,12 @@ function App() {
           element: <PostsPage />,
           loader: postsLoader,
         },
+        {
+          path: "posts/queue",
+          element: <PostQueuePage />,
+          loader: postsQueueLoader,
+        },
+
         { path: "posts/new", element: <NewPostPage />, action: newPostAction },
         {
           path: "posts/:id",

@@ -19,9 +19,9 @@ import {
 import { ref as dbRef, get, child, push, update } from "firebase/database";
 import { db } from "./firebase";
 
-export const getPosts = async () => {
+export const getPosts = async (path) => {
   const loadedPosts = [];
-  await get(child(dbRef(db), `posts`))
+  await get(child(dbRef(db), path))
     .then((data) => {
       const posts = data.val();
       for (const post in posts) {
@@ -57,17 +57,15 @@ export const writePostComment = (auth, body, postId) => {
     throw new Error("commentLogin");
   }
   const commentData = {
-    body,
+    body: body.text,
+    date: body.date,
     user: auth.currentUser.displayName,
     uid: auth.currentUser.uid,
   };
-
-  const newCommentKey = push(
-    child(dbRef(db), "posts/" + postId + "comments")
-  ).key;
+  const newCommentKey = push(child(dbRef(db), postId + "comments")).key;
 
   const updates = {};
-  updates["/posts/" + postId + "/comments/" + newCommentKey] = commentData;
+  updates["posts/" + postId + "/comments/" + newCommentKey] = commentData;
   updates["/user-comments/" + auth.currentUser.uid + "/" + newCommentKey] =
     commentData;
 
@@ -83,6 +81,7 @@ export const getPostComments = async (id) => {
         loadedComments.push({
           id: comment,
           body: comments[comment].body,
+          date: comments[comment].date,
           uid: comments[comment].uid,
           username: comments[comment].user,
         });
@@ -260,6 +259,7 @@ export async function writeNewPost(auth, data) {
   // Write the new post's data simultaneously in the posts list and the user's post list.
   const updates = {};
   updates["/posts/" + newPostKey] = postData;
+  updates["/queue/" + newPostKey] = postData;
   updates["/user-posts/" + auth.currentUser.uid + "/" + newPostKey] = postData;
 
   return update(dbRef(db), updates);

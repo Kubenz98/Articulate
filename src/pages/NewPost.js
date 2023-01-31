@@ -43,5 +43,5 @@ export async function action({ request }) {
   } catch (err) {
     throw json({ code: err.code });
   }
-  return redirect("/posts?page=1");
+  return redirect("/posts/queue?page=1");
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import classes from "./PostDetail.module.scss";
 
 const PostDetail = (props) => {
   const [showComments, setShowComments] = useState(false);
   const [image, setImage] = useState("");
+  const location = useLocation();
 
   const { postData } = props;
 
@@ -21,6 +22,13 @@ const PostDetail = (props) => {
     img.src = postData.imageLink;
     img.onload = () => setImage(img);
   }, [postData.imageLink]);
+
+  useEffect(() => {
+    if (location.pathname.endsWith("comments")) {
+      setShowComments(true);
+    }
+  }, [location.pathname]);
+
   const commentsHandler = () => {
     setShowComments((state) => !state);
   };

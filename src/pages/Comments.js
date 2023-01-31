@@ -12,7 +12,13 @@ const CommentsPage = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Await resolve={data.comments}>
-        {(loadedComments) => <Comments data={loadedComments} submitting={navigation.state === 'submitting'} />}
+        {(loadedComments) => (
+          <Comments
+            data={loadedComments}
+            submitting={navigation.state === "submitting"}
+            auth={auth}
+          />
+        )}
       </Await>
     </Suspense>
   );
@@ -21,7 +27,7 @@ const CommentsPage = () => {
 export default CommentsPage;
 
 export async function loader({ params }) {
-  return defer({ comments: getPostComments(params.id) });
+  return defer({ comments: getPostComments(params.id, "main") });
 }
 
 export async function action({ request, params }) {
@@ -30,10 +36,13 @@ export async function action({ request, params }) {
 
   const data = await request.formData();
 
-  const commentBody = data.get("comment");
+  const commentBody = {
+    text: data.get("comment"),
+    date: Date.now(),
+  };
 
-  if(commentBody.length < 3) {
-    return 'The comment must be at least 3 characters long'
+  if (commentBody.text.length < 3) {
+    return "The comment must be at least 3 characters long";
   }
 
   await writePostComment(auth, commentBody, id);
