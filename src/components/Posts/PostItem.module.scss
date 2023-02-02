@@ -20,9 +20,7 @@
     transform: scale(1.02);
     box-shadow: none;
   }
-  &:first-child {
-    grid-column: span 2;
-  }
+
   & .post {
     display: block;
     width: 100%;

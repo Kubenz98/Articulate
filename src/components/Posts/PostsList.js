@@ -33,7 +33,7 @@ const Posts = (props) => {
 
   const { currentItems, pageCount, handlePageClick, itemOffset } = usePaginate(
     filteredPosts,
-    8,
+    6,
     "postList",
     currentPage,
     props.isOnUserProfile
