@@ -18,6 +18,8 @@
     margin: 0 auto 10px;
     & img {
       width: 100%;
+      object-fit: contain;
+      aspect-ratio: 3/2;
     }
   }
   &__text {

@@ -40,11 +40,11 @@ const NewPostForm = (props: FormProps) => {
       <Form className="form" method="post" encType="multipart/form-data">
         <div className="form__controls">
           <label htmlFor="title">Title</label>
-          <input id="title" name="title" required minLength={3} />
+          <input id="title" name="title" required minLength={3} maxLength={65} />
         </div>
         <div className="form__controls">
           <label htmlFor="tags">Tags (separated by commas)</label>
-          <input id="tags" name="tags" required maxLength={25} />
+          <input id="tags" name="tags" required maxLength={30} />
         </div>
         <div className="form__controls">
           <label htmlFor="text">Text</label>
