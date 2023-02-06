@@ -1,6 +1,6 @@
 import { SignupData, SignupValidation } from "src/ts/signupInterfaces";
 
-const emailValidation = (email: string) => {
+export const emailValidation = (email: string) => {
   const validRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return email.match(validRegex) ? true : false;

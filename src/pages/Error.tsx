@@ -11,7 +11,7 @@ const ErrorPage = () => {
     } else if (error.data.code === "auth/user-not-found") {
       message = "User not found.";
     } else if (error.data.code === "auth/too-many-requests") {
-      message = "Too much sign in attempts. Try again later.";
+      message = "Too many attempts. Try again later.";
     } else if (error.data.code === "auth/email-already-exists") {
       message = "Provided email is already taken.";
     } else if (error.data.code === "auth/invalid-email") {

@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "../components/Profile/Profile";
 import { updateUserPassword } from "../api/authApi";
 import { auth } from "../firebase";
-import { redirect } from "react-router-dom";
+import { json } from "react-router-dom";
 import {
   passwordValidation,
   equalPasswords,
@@ -17,7 +17,7 @@ export default ProfilePage;
 export async function action(args: { request: Request }) {
   const { request } = args;
   const data = await request.formData();
-  let errorMessage: string = "";
+  let message: string = "";
 
   const dataToUpdate = {
     oldPassword: data.get("oldPassword") as string,
@@ -33,18 +33,22 @@ export async function action(args: { request: Request }) {
   const passwordLengthValidate = passwordValidation(dataToUpdate.newPassword);
 
   if (!passwordsEqual) {
-    errorMessage = "Passwords are not the same.";
+    message = "Passwords are not the same";
   }
   if (!passwordLengthValidate) {
-    errorMessage = "Password must have at least 6 characters";
+    message = "Password must have at least 6 characters";
   }
-  if (errorMessage) return errorMessage;
+  if (message) return message;
 
-  await updateUserPassword(
-    auth.currentUser!,
-    dataToUpdate.newPassword,
-    dataToUpdate.oldPassword
-  );
+  try {
+    await updateUserPassword(
+      auth.currentUser!,
+      dataToUpdate.newPassword,
+      dataToUpdate.oldPassword
+    );
+  } catch (err) {
+    throw json({ code: err.code });
+  }
 
-  return redirect("/");
+  return (message = "Password changed");
 }

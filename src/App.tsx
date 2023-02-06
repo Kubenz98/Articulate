@@ -2,7 +2,7 @@ import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
-  RouteObject
+  RouteObject,
 } from "react-router-dom";
 
 import PostDetailPage, { loader as postDetailLoader } from "./pages/PostDetail";
@@ -23,9 +23,11 @@ import NotFoundPage from "./pages/NotFound";
 import SignUpPage, { action as signUpAction } from "./pages/SignUp";
 import ProfilePage, { action as profileAction } from "./pages/Profile";
 import ConfirmEmailPage from "./pages/ConfirmEmail";
+import ForgotPasswordPage, {
+  action as forgotPasswordAction,
+} from "./pages/ForgotPassword";
 
 function App() {
-
   const routes: RouteObject[] = [
     {
       path: "/",
@@ -36,6 +38,11 @@ function App() {
         { path: "login", element: <AuthPage />, action: authAction },
         { path: "signup", element: <SignUpPage />, action: signUpAction },
         { path: "confirm", element: <ConfirmEmailPage /> },
+        {
+          path: "forgotPassword",
+          element: <ForgotPasswordPage />,
+          action: forgotPasswordAction,
+        },
         { path: "profile", element: <ProfilePage />, action: profileAction },
         {
           path: "posts",
@@ -71,9 +78,8 @@ function App() {
         { path: "*", element: <NotFoundPage /> },
       ],
     },
-  ]
+  ];
 
-  
   const router = createBrowserRouter(routes);
   return <RouterProvider router={router} />;
 }

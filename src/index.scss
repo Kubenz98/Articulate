@@ -160,10 +160,13 @@ h1 {
 }
 
 .link {
-  font-size: 20px;
+  font-size: 14px;
   color: white;
   text-underline-offset: 8px;
   transition: color 0.2s, text-underline-offset 0.2s;
+  @media (min-width: 400px) {
+    font-size: 20px;
+  }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       color: $mainColor;
