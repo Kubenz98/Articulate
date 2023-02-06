@@ -3,7 +3,7 @@
 This is an application project where users can register, create posts (with cover photos), and write comments. It includes pagination and a searcher on the posts and users page. To allow users to create a new post, they must have a confirmed account with an email address.
 
 ## Tech Stack
-React, React Router, Firebase
+Typescript, React, React Router, Firebase
 
 
 ## Screenshots
