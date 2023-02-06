@@ -1,14 +1,12 @@
 import { Post } from "./postInterfaces";
 
 export interface User {
-  email: string;
   profile_picture: string;
   userId: string;
   username: string;
 }
 
 export interface UserDetailsProps {
-  email: string;
   profile_picture: string;
   username: string;
   posts: Post[];

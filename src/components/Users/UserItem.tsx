@@ -13,7 +13,7 @@ const UserItem = (props: User) => {
           <img src={props.profile_picture} alt="avatar" />
         </div>
         <h3 className={classes["user__name"]}>
-          {props.username || props.email}
+          {props.username}
         </h3>
       </Link>
     </li>

@@ -52,7 +52,6 @@ const UserList = (props: { users: User[] }) => {
             userId={user.userId}
             profile_picture={user.profile_picture}
             username={user.username}
-            email={user.email}
           />
         ))}
       </ul>

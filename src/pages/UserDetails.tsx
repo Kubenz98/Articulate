@@ -26,7 +26,6 @@ const UserDetailsPage = () => {
               <UserDetails
                 profile_picture={loadedData.userData.profile_picture}
                 username={loadedData.userData.username}
-                email={loadedData.userData.email}
                 posts={postsCopy}
               />
             );

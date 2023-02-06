@@ -45,7 +45,6 @@ export const getAllUsers = async () => {
         loadedUsers.push({
           userId: users[user].userId,
           username: users[user].username,
-          email: users[user].email,
           profile_picture: users[user].profile_picture,
         });
       }
