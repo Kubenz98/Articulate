@@ -29,7 +29,7 @@ const NewPostForm = (props: FormProps) => {
 
   return (
     <>
-      <h1>Add New Post</h1>
+      <h1 style={{margin: '10px auto'}}>Add New Post</h1>
       {!user!.emailVerified && !loading && (
         <h4 className="confirm-error">
           Only users with a confirmed email address can post. If you see this
