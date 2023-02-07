@@ -65,7 +65,7 @@ const PostItem = (props: itemProps) => {
         <h3 className={classes["post__title"]}>{props.title}</h3>
         <p className={classes["post__text"]}>{text}</p>
       </Link>
-      {auth?.currentUser?.uid === "qkAGPRmQgjf4ZJBDyxwsCOjvIWb2" &&
+      {auth?.currentUser?.uid === "zO2cporaARafP5FuZYiddia5Meg2" &&
         location.pathname === "/posts/queue" && (
           <button
             className={classes["list-item__button"]}

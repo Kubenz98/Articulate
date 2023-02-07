@@ -19,7 +19,7 @@ const Authentication = (props: AuthProps) => {
 
   return (
     <>
-      <h1>Login</h1>
+      <h1>Log in</h1>
       <Form className="form" method="post">
         <div className="form__controls">
           <label htmlFor="email">Email</label>
@@ -29,18 +29,23 @@ const Authentication = (props: AuthProps) => {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
         </div>
+        <div className="form__actions" style={{ marginTop: "10px" }}>
+          <button className="button button--link" disabled={props.submitting}>
+            {props.submitting ? "Submitting..." : "Login"}
+          </button>
+        </div>
+      <div className="form__actions">
+          <Link to="../forgotPassword" className="link">
+            Forgot password?
+          </Link>
+        </div>
         <div className="form__actions">
           <Link to="../signup" className="link">
             Click here to create new account
           </Link>
         </div>
-        <div className="form__actions" style={{ marginTop: "40px" }}>
-          <button className="button button--link" disabled={props.submitting}>
-            {props.submitting ? "Submitting..." : "Login"}
-          </button>
-        </div>
       </Form>
-    </>
+      </>
   );
 };
 
