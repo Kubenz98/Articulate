@@ -15,6 +15,9 @@
   margin-bottom: 30px;
   font-size: 20px;
   text-align: left;
+  @media (min-width: 500px) {
+    text-align: center;
+  }
 }
 
 .link {

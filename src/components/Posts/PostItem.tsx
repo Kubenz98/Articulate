@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./PostItem.module.scss";
 import { useState, useEffect } from "react";
 import textTruncate from "../../helpers/textTruncate";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ref as dbRef, get, child, update, set } from "firebase/database";
 import { db } from "../../firebase";
@@ -52,7 +52,6 @@ const PostItem = (props: itemProps) => {
         throw new Error("postError");
       });
   };
-
   return image || !props.imageLink ? (
     <li className={classes["list-item"]}>
       <Link to={`/posts/${props.id!.toString()}`} className={classes.post}>
@@ -76,7 +75,7 @@ const PostItem = (props: itemProps) => {
         )}
     </li>
   ) : (
-    <LoadingSpinner />
+    <LoadingSkeleton loading={true} />
   );
 };
 

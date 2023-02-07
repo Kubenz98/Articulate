@@ -12,7 +12,7 @@
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s;
-  &:first-child{
+  &:first-child {
     margin-top: 0;
   }
   @media (min-width: 700px) {
@@ -39,9 +39,9 @@
     }
     &__image {
       & img {
-        max-width: 100%;
-        object-fit: contain;
         aspect-ratio: 3/2;
+        max-width: 100%;
+        object-fit: cover;
       }
     }
     &__title {
