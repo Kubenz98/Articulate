@@ -70,7 +70,6 @@ const PostDetail = (props: PostProps) => {
       )}
       <pre className={classes["post__text"]}>{postData.body}</pre>
       <span className={classes["post__author"]}>
-        author:{" "}
         <Link to={`/users/${userId}`} relative="route">
           {postData.user}
         </Link>
