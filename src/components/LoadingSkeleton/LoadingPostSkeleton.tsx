@@ -6,7 +6,7 @@ interface PostProps {
   loading: boolean;
 }
 
-function LoadingSkeleton({ loading }: PostProps) {
+const LoadingSkeleton = ({ loading }: PostProps) => {
   return (
     <SkeletonTheme baseColor="#252525" highlightColor="#363636">
         <div>

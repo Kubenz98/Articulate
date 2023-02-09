@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./PostItem.module.scss";
 import { useState, useEffect } from "react";
 import textTruncate from "../../helpers/textTruncate";
-import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
+import LoadingSkeleton from "../LoadingSkeleton/LoadingPostSkeleton";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ref as dbRef, get, child, update, set } from "firebase/database";
 import { db } from "../../firebase";
@@ -31,6 +31,7 @@ const PostItem = (props: itemProps) => {
     if (props.imageLink) {
       const img = new Image();
       img.src = props.imageLink;
+      img.alt = "avatar";
       img.onload = () => setImage(img);
     }
   }, [props.imageLink]);
@@ -52,15 +53,13 @@ const PostItem = (props: itemProps) => {
         throw new Error("postError");
       });
   };
-  return image || !props.imageLink ? (
+  return image ? (
     <li className={classes["list-item"]}>
       <Link to={`/posts/${props.id!.toString()}`} className={classes.post}>
         <p className={classes["post__tags"]}>{props.tags}</p>
-        {props.imageLink && (
-          <div className={classes["post__image"]}>
-            <img src={props.imageLink} alt="img" />
-          </div>
-        )}
+       <div className={classes["post__image"]}>
+       <img src={image.src} alt={image.alt} />
+     </div>
         <h3 className={classes["post__title"]}>{props.title}</h3>
         <p className={classes["post__text"]}>{text}</p>
       </Link>
