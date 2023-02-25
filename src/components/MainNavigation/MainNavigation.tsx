@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
@@ -10,10 +10,22 @@ import { auth } from "../../firebase";
 import { logout } from "../../api/authApi";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import {
+  faGear,
+  faHouse,
+  faRightFromBracket,
+  faRightToBracket,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const MainNavigation = () => {
   const [navActive, setNavActive] = useState(false);
   const loading = useAuthState(auth)[1];
   const authCtx = useContext(AuthContext);
+
+  library.add(faHouse, faUsers, faGear, faRightFromBracket, faRightToBracket);
 
   const navHandler = () => {
     setNavActive((state) => !state);
@@ -29,7 +41,7 @@ const MainNavigation = () => {
   };
 
   const navHorizontal = useMediaQuery({
-    query: "(min-width: 700px)",
+    query: "(min-width: 830px)",
   });
 
   let navClassHori = `${classes.nav} ${classes["nav--horizontal"]}`;
@@ -43,7 +55,7 @@ const MainNavigation = () => {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Link to="/" onClick={closeNav}>
+        <Link to="/posts?page=1" onClick={closeNav}>
           Articulate
         </Link>
       </div>
@@ -52,10 +64,11 @@ const MainNavigation = () => {
         <ul>
           <li>
             <NavLink
-              to="/"
+              to="/posts?page=1"
               className={(link) => (link.isActive ? classes.active : undefined)}
               onClick={closeNav}
             >
+              <FontAwesomeIcon icon="house" />
               Home
             </NavLink>
           </li>
@@ -68,31 +81,25 @@ const MainNavigation = () => {
                 }
                 onClick={closeNav}
               >
+                <FontAwesomeIcon icon="gear" />
                 Profile
               </NavLink>
             </li>
           )}
           <li>
             <NavLink
-              to="/posts?page=1"
-              className={(link) => (link.isActive ? classes.active : undefined)}
-              onClick={closeNav}
-            >
-              Posts
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/users?page=1"
               className={(link) => (link.isActive ? classes.active : undefined)}
               onClick={closeNav}
             >
+              <FontAwesomeIcon icon="users" />
               Users
             </NavLink>
           </li>
           {authCtx.isLoggedIn ? (
             <li>
               <NavLink to="/" onClick={logoutUser}>
+                <FontAwesomeIcon icon="right-from-bracket" />
                 Logout
               </NavLink>
             </li>
@@ -105,6 +112,7 @@ const MainNavigation = () => {
                 }
                 onClick={closeNav}
               >
+                <FontAwesomeIcon icon="right-to-bracket" />
                 Login
               </NavLink>
             </li>

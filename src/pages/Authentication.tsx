@@ -7,7 +7,7 @@ import { UserAuth } from 'src/ts/userInterfaces';
 
 const AuthPage = () => {
   const navigation = useNavigation();
-  return <Authentication submitting={navigation.state === "submitting"} />;
+  return <Authentication submitting={navigation.state === "submitting"} title="Log in" />;
 };
 
 export default AuthPage;
@@ -26,5 +26,5 @@ export async function action(args: { request: Request }) {
     throw json({ code: err.code });
   }
 
-  return redirect("/");
+  return redirect("/posts?page=1");
 }

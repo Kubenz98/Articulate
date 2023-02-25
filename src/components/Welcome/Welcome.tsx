@@ -1,40 +1,45 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import React from "react";
+import { Link, useNavigation, Navigate } from "react-router-dom";
 import classes from "./Welcome.module.scss";
 import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import Authentication from "../Auth/Authentication";
 
 const Welcome = () => {
-  const authCtx = useContext(AuthContext);
-  const loading = useAuthState(auth)[1];
+  const [user, loading] = useAuthState(auth);
+  const navigation = useNavigation();
 
   if (loading) return <LoadingSpinner />;
 
+  if (!loading && user) {
+    return <Navigate to="/posts?page=1" replace={true} />;
+  }
+
   return (
     <div className={classes.welcome}>
-      <h1 className={classes.title}>
-        Welcome{" "}
-        {authCtx.isLoggedIn &&
-          (authCtx.currentUser!.displayName || authCtx.currentUser!.email)}
-        !
-      </h1>
-      <p className={classes.text}>
-        Articulate is a webpage, where users can publish their own posts about
-        various topics. From travel to health and beauty to entertainment and
-        social issues, we have something for everyone. Our community is made up
-        of people from all over the world who share their experiences and
-        perspectives. Join us and start sharing your thoughts with others!
-      </p>
-      {!authCtx.isLoggedIn && (
-        <Link to="/login" className="link">
-          Click here to login or sign up!
-        </Link>
-      )}
-      <Link to="posts?page=1" className={classes.link}>
-        Check out all posts!
-      </Link>
+      <div className={classes["welcome__description"]}>
+        <h1 className={classes["welcome__description-logo"]}>Articulate</h1>
+        <p className={classes["welcome__description-text"]}>
+          On Articulate users publishes various articles from different fields
+          of life, written by different authors.
+        </p>
+      </div>
+      <div className={classes["welcome__log-in"]}>
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <Authentication submitting={navigation.state === "submitting"} />
+            <div className={classes.separator}>
+              <p>or</p>
+              <Link to="posts?page=1" className={classes.link}>
+                Enter as a guest
+              </Link>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

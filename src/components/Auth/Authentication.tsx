@@ -5,6 +5,7 @@ import { auth } from "../../firebase";
 
 interface AuthProps {
   submitting: boolean;
+  title?: string
 }
 
 const Authentication = (props: AuthProps) => {
@@ -19,14 +20,17 @@ const Authentication = (props: AuthProps) => {
 
   return (
     <>
-      <h1>Log in</h1>
+      {props.title && <h1>{props.title}</h1>}
       <Form className="form" method="post">
         <div className="form__controls">
           <label htmlFor="email">Email</label>
           <input id="email" name="email" type="email" required />
         </div>
         <div className="form__controls">
-          <label htmlFor="password">Password</label>
+          <div className="form__controls-password">
+            <label htmlFor="password">Password</label>
+            <Link to="/forgotPassword">forgot password?</Link>
+          </div>
           <input id="password" name="password" type="password" required />
         </div>
         <div className="form__actions" style={{ marginTop: "10px" }}>
@@ -34,10 +38,7 @@ const Authentication = (props: AuthProps) => {
             {props.submitting ? "Submitting..." : "Login"}
           </button>
         </div>
-      <div className="form__actions">
-          <Link to="../forgotPassword" className="link">
-            Forgot password?
-          </Link>
+        <div className="form__actions">
         </div>
         <div className="form__actions">
           <Link to="../signup" className="link">
@@ -45,7 +46,7 @@ const Authentication = (props: AuthProps) => {
           </Link>
         </div>
       </Form>
-      </>
+    </>
   );
 };
 

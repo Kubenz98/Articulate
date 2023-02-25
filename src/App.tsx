@@ -31,10 +31,15 @@ function App() {
   const routes: RouteObject[] = [
     {
       path: "/",
+      element: <WelcomePage />,
+      errorElement: <Error />,
+      action: authAction,
+    },
+    {
+      path: "/",
       element: <RootLayout />,
       errorElement: <Error />,
       children: [
-        { index: true, element: <WelcomePage /> },
         { path: "login", element: <AuthPage />, action: authAction },
         { path: "signup", element: <SignUpPage />, action: signUpAction },
         { path: "confirm", element: <ConfirmEmailPage /> },
