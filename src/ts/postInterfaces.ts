@@ -25,7 +25,3 @@ export interface WritePostFormData {
   image: File;
 }
 
-
-export interface PostsUpdates {
-  [key: string]: Post;
-}

@@ -12,7 +12,6 @@ import {
   PostsObj,
   Post,
   WritePostFormData,
-  PostsUpdates,
 } from "src/ts/postInterfaces";
 
 export const getPosts = async (path: string) => {
@@ -80,7 +79,7 @@ export async function writeNewPost(auth: Auth, data: WritePostFormData) {
   const newPostKey = push(child(dbRef(db), "posts")).key;
 
   // Write the new post's data simultaneously in the posts list and the user's post list.
-  const updates: PostsUpdates = {};
+  const updates: PostsObj = {};
   updates["/posts/" + newPostKey] = postData;
   updates["/queue/" + newPostKey] = postData;
   updates["/user-posts/" + auth.currentUser.uid + "/" + newPostKey] = postData;

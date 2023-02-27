@@ -2,7 +2,7 @@ import { ref as dbRef, get, child, push, update } from "firebase/database";
 import { db } from "../firebase";
 import { Auth } from "firebase/auth";
 
-import { Comment, CommentUpdates, CommentsObj } from "src/ts/commentInterfaces";
+import { Comment, CommentsObj } from "src/ts/commentInterfaces";
 
 export const writePostComment = (
   auth: Auth,
@@ -20,7 +20,7 @@ export const writePostComment = (
   };
   const newCommentKey = push(child(dbRef(db), postId + "comments")).key;
 
-  const updates: CommentUpdates = {};
+  const updates: CommentsObj = {};
   updates["posts/" + postId + "/comments/" + newCommentKey] = commentData;
   updates["/user-comments/" + auth.currentUser.uid + "/" + newCommentKey] =
     commentData;

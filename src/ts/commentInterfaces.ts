@@ -13,7 +13,3 @@ export interface CommentsArr {
 export interface CommentsObj {
   [key: string]: Comment;
 }
-
-export interface CommentUpdates {
-  [key: string]: Comment;
-}
